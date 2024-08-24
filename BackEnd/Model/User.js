@@ -1,5 +1,4 @@
 import mongoose from "mongoose";
-import { Notification } from "./Notification.js";
 
 const user = new mongoose.Schema({
 
@@ -7,6 +6,11 @@ const user = new mongoose.Schema({
         type:String,
         required:true,
         unique:true
+    },
+    name:{
+        type:String,
+        required:true,
+        default:""
     },
     email:{
         type:String,
@@ -31,8 +35,23 @@ const user = new mongoose.Schema({
         default:""
     },
     notifications:[
-        Notification
-    ]
+        {
+            type:mongoose.Schema.Types.ObjectId,
+            ref:'Notification'
+        }
+    ],
+    createdAt:{
+        type:Date,
+        default:Date.now
+    },
+    updatedAt:{
+        type:Date,
+        default:Date.now
+    },
+    admin:{
+        type:Boolean,
+        default:false
+    }
 
 })
 
