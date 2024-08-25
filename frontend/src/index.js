@@ -3,11 +3,18 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import GlobeData from './Components/GlobeData';
+import { BrowserRouter } from'react-router-dom';
+import ToasterFunc from './Components/ToasterFunc';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <App />
+    <BrowserRouter>
+    <GlobeData>
+        <App />
+    </GlobeData>
+    </BrowserRouter>
   </React.StrictMode>
 );
 

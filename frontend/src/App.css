@@ -36,3 +36,40 @@
     transform: rotate(360deg);
   }
 }
+
+
+/********************************************************************/
+
+.DarkBG{
+
+  background-color: #1a1a1a;
+  color: white;
+
+}
+
+.DarkMD{
+
+  background-color: #282828;
+}
+
+.DarkSD{
+  background-color: #393939;
+
+}
+
+.LightBG{
+
+  background-color: #f0f0f0;
+  color: black;
+
+}
+
+.LightMD{
+
+  background-color: #ffffff;
+}
+
+.LightSD{
+
+  background-color: lightgrey;
+}

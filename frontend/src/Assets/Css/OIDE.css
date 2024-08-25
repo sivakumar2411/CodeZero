@@ -1,0 +1,44 @@
+.OIDEBaseDiv{
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.NavOnOIDE{
+    width: 100%;
+    height: 7vh;
+    position: fixed;
+    top: 0;
+}
+
+.OIDEMainDiv{
+    margin-top: 8vh;
+    width: 95%;
+    height: 90vh;
+    display: grid;
+    grid-template-columns: 70% 30%;
+    grid-template-rows: 50% 50%;
+    gap: 5px;
+}
+
+.IDEDivOnOIDE{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    grid-row: 1 / 3;
+    border: 1px groove white;
+}
+
+.InputOnOIDE{
+    width: 100%;
+    height: 100%;
+    border: 1px groove white;
+}
+.OutputOnOIDE{
+    width: 100%;
+    height: 100%;
+    border: 1px groove white;
+}
