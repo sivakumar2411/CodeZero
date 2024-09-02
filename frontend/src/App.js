@@ -4,11 +4,12 @@ import Home from './Components/Home';
 import Problems from './Components/Problems';
 import Friends from './Components/Friends';
 import OpenIDE from './Components/OpenIDE';
-// import ToasterFunc from './Components/ToasterFunc';
+import ToasterFunc from './Components/ToasterFunc';
 
 function App() {
   return (
     <>
+    <ToasterFunc/>
     <Routes>
       <Route path='/' element={<Home/>}/>
       <Route path='/Home' element={<Home/>}/>

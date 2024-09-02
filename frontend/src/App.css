@@ -40,36 +40,43 @@
 
 /********************************************************************/
 
+.CenterFication{
+  display: grid;
+  place-items: center;
+}
+
 .DarkBG{
 
   background-color: #1a1a1a;
   color: white;
-
 }
 
 .DarkMD{
-
-  background-color: #282828;
+  background-color: #232323;
+  box-shadow: 0px 0px 3px .1px black;
 }
 
 .DarkSD{
   background-color: #393939;
-
+  box-shadow: 0px 0px 2px .1px black;
 }
 
 .LightBG{
 
   background-color: #f0f0f0;
   color: black;
-
 }
 
 .LightMD{
 
   background-color: #ffffff;
+  box-shadow: 0px 0px 3px .1px white;
+
 }
 
 .LightSD{
 
   background-color: lightgrey;
+  box-shadow: 0px 0px 3px .1px white;
+
 }

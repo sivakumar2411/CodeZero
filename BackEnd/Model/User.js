@@ -34,6 +34,10 @@ const user = new mongoose.Schema({
         type:String,
         default:""
     },
+    will:{
+        type:Number,
+        default:100
+    },
     notifications:[
         {
             type:mongoose.Schema.Types.ObjectId,
