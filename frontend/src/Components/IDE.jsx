@@ -9,9 +9,8 @@ const IDE = ({props}) => {
 
     const {Theme} = useContext(ThemeContext);
 
-    const {val,setVal,language,setL} = props;
+    const {val,setVal,language,setL,optVisi,setOV} = props;
 
-    const [optVisi,setOV] = useState(false);
     const [langName,setLN] = useState("JavaScript");
     
 
@@ -21,10 +20,10 @@ const IDE = ({props}) => {
       setLN(data.Name);
     }
   return (
-    <div className={`IDEMainDiv ${Theme.BG}`}>
+    <div className={`IDEMainDiv ${Theme.BG}`} onClick={(event)=>{event.preventDefault();}}>
     <div className={`HeadingOnIDE ${Theme.MD}`}>
       <div className='LanguageSelectionOnIDE'>
-        <div className='SelectedOptionOnIDE' onClick={(event)=>{event.preventDefault();setOV(true)}}>{langName} <ExpandMoreIcon/></div>
+        <div className='SelectedOptionOnIDE' onClick={(event)=>{event.stopPropagation();setOV(!optVisi)}}>{langName} <ExpandMoreIcon/></div>
         {(optVisi)?<div className={`LanguageOptions ${Theme.SD}` }>{CLChoice.map((choice,index)=>(
           <div key={index} onClick={(event)=>{event.preventDefault();handleSelection(choice);setOV(false)}}>{choice.Name}</div>
         ))}

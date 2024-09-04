@@ -14,6 +14,7 @@ const OpenIDE = () => {
     const [language,setL] = useState("javascript");
     const [input,setI] = useState("");
     const [output,setO] = useState("");
+    const [optVisi,setOV] = useState(false);
 
     const ExCode = async()=>{
       const res = await Execute({code:val,language,input});
@@ -22,7 +23,7 @@ const OpenIDE = () => {
     }
 
   return (
-    <div className={`OIDEBaseDiv ${Theme.BG}`}>
+    <div className={`OIDEBaseDiv ${Theme.BG}`} onClick={(event)=>{event.preventDefault();setOV(false)}}>
 
         <div className="NavOnOIDE">
             <Navbar/>
@@ -30,7 +31,7 @@ const OpenIDE = () => {
 
     <div className="OIDEMainDiv">
         <div className={`IDEDivOnOIDE ${Theme.MD}`}>
-          <IDE props={{val,setVal,language,setL}}/>
+          <IDE props={{val,setVal,language,setL,optVisi,setOV}}/>
         </div>
         <div className={`InputOnOIDE ${Theme.MD}`}>
           <div className={`InputHeadingDiv ${Theme.MD}`}>

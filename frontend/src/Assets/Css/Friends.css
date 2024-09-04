@@ -8,6 +8,7 @@
 }
 
 .NavOnFriends{
+    min-width: 910px;
     width: 100%;
     height: 7vh;
     position: fixed;
