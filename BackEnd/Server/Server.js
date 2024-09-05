@@ -17,8 +17,11 @@ app.use(cors({
 }));
 
 app.use(express.json());
-app.use("/Api",Routes);
-
+try{
+    app.use("/Api",Routes);
+}
+catch(e){
+}
 
 
 app.listen(PORT,()=>{

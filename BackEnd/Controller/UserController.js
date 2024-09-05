@@ -1,14 +1,20 @@
 import { User } from "../Model/User.js";
-
+import bcrypt from "bcryptjs";
+import GenerateJWT from "../Util/GenerateToken.js";
 
 export const postNewUser = async(req,res) =>{
 
     try{
         const {uname,name,email,password,gender,bio,notifications} = req.body;
 
+        
+        const salt = await bcrypt.getSalt(10);
+        const hashedPassword = await bcrypt.hash(password, salt);
+        
         const user = new User({
-            uname,name,email,password,gender,bio,notifications
+            uname,name,email,password:hashedPassword,gender,bio,notifications
         })
+        GenerateJWT(user._id,res);
 
         await user.save();
         res.status(201).json({data:user});
@@ -18,6 +24,35 @@ export const postNewUser = async(req,res) =>{
         console.log("Error at Post New User "+error.message);
     }
 
+}
+
+export const LogIn = async(req,res) =>{
+    try{
+    const {username,password} = req.body;
+    const User = await User.findOne({uname:username} || {email:username});
+
+    if(!User)
+        return res.status(404).json({message: "User not found"});
+    if(!await bcrypt.compare(password, User.password))
+        return res.status(400).json({message: "Wrong Password"});
+
+    GenerateJWT(User._id,res);
+    res.json({message: "Logged In Successfully"});}
+    catch(error){
+        res.status(500).json({message:error.message});
+        console.log("Error at Login "+error.message);
+    }
+}
+
+export const LogOut = async(req,res) =>{
+    try{
+        res.cookie("jwt","",{maxAge:0});
+        res.json({message:"Logged Out Successfully"});
+    }
+    catch(error){
+        res.status(500).json({message:error.message});
+        console.log("Error at Logout "+error.message);
+    }
 }
 
 export const updateUser = async(req,res) =>{

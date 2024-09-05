@@ -5,13 +5,20 @@ import { useNavigate } from 'react-router-dom';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 // import { GiBrainstorm } from "react-icons/gi";
 import { PiBrain } from "react-icons/pi";
+import { Boy, DarkTheme, LightTheme } from '../Assets/Datas';
+import NightsStayIcon from '@mui/icons-material/NightsStay';
+import LightModeIcon from '@mui/icons-material/LightMode';
 
 const Navbar = () => {
 
-  const {Theme} = useContext(ThemeContext);
-  const {LoggedIn} = useContext(UserContext);
+  const {Theme,setTheme,ThemeOptVisi,setTOV} = useContext(ThemeContext);
+  const {LoggedIn,User} = useContext(UserContext);
   const [curPage,setCP] = useState("H");
   const navi = useNavigate();
+
+  const handleTheme = (The) =>{
+    setTheme({BG:The.BG,MD:The.MD,SD:The.SD,HD:The.HD,name:The.name});
+  }
 
   useEffect(()=>{
 
@@ -32,7 +39,7 @@ const Navbar = () => {
   },[])
 
   return (
-    <div className={`NavBarMainDiv ${Theme.MD}`}>
+    <div className={`NavBarMainDiv ${Theme.MD}`} onClick={(event)=>{setTOV("hidden")}}>
         <div className="LogoOnNav" onClick={()=>{navi("/Home")}}>CZ</div>
         <div className="LeftNavDiv">
           <div className={"NavItems NItem-1 "+((curPage === "H")?"ActivePage":"")} onClick={()=>{navi("/Home")}}>Home</div>
@@ -41,10 +48,21 @@ const Navbar = () => {
           <div className={"NavItems NItem-4 "+((curPage === "F")?"ActivePage":"")} onClick={()=>{navi("/Friends")}}>Friends</div>
         </div>
         <div className="RightNavDiv">
-          {(!LoggedIn)?<><div className="NavItems NItem-1"><NotificationsIcon /></div>
-          <div className="NavItems NItem-2"><PiBrain size={20}/></div>
-          <div className="NavItems NItem-3"></div></>:
+          {(!LoggedIn)?<><div className={`NavItems NItem-1 ${Theme.HD}`}><NotificationsIcon /></div>
+          <div className={`NavItems NItem-2 ${Theme.HD}`}><PiBrain size={20}/></div>
+          <div className="NavItems NItem-3"><img style={{width:"100%",height:"100%",borderRadius:"50%"}} src={User?User.profilePic:Boy} alt={Boy}/></div></>:
           <div div className="NavItems NItem-1 LogInOnNavBar">LogIn</div>}
+          <div className={`NavItems NItem-4 ${Theme.HD}`} onClick={(event)=>{event.stopPropagation();setTOV("visible");}}>{Theme.name.includes("Dark")?<NightsStayIcon/>:<LightModeIcon/>}
+            <div className={`ThemeSelector ${Theme.SD}`} style={{visibility:ThemeOptVisi}} >
+              {(ThemeOptVisi)?<>
+              {(DarkTheme).map((the,index)=>(
+                <div onClick={(event)=>{event.stopPropagation();handleTheme(the);setTOV("hidden");}}>{the.name}</div>
+              ))}
+              {(LightTheme).map((the,index)=>(
+                <div onClick={(event)=>{event.stopPropagation();handleTheme(the);setTOV("hidden");}}>{the.name}</div>
+              ))}</>:null}
+            </div>
+          </div>
         </div>
     </div>
   )

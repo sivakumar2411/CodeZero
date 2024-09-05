@@ -1,0 +1,26 @@
+.ErrorBaseDiv{
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+.ErrorMainDiv{
+    width: 70%;
+    height: 100vh;
+}
+.PageNotFoundBaseDiv{
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+.PageNotFoundMainDiv{
+    width: 70%;
+    height: 100vh;
+}

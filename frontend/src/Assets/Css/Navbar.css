@@ -32,7 +32,7 @@
 }
 
 .LeftNavDiv .ActivePage{
-    border-bottom:2px groove white;
+    border-bottom:2px groove;
 }
 
 .RightNavDiv{
@@ -40,4 +40,28 @@
     margin: auto;
     display: flex;
     align-items: center;
+    column-gap: 20px;
+}
+
+.RightNavDiv .NavItems{
+    width: 40px;
+    height: 40px;
+    display: grid;
+    place-items: center;
+    cursor: pointer;
+    border-radius: 50%;
+}
+
+.RightNavDiv .NItem-4{
+    position:relative;
+}
+
+.NItem-4 .ThemeSelector{
+    position:absolute;
+    top: 100%;
+    padding:10px 10px 10px 10px;
+    border-radius: 10px;
+    left: 0;
+    z-index: 21;
+    /* background-color: white; */
 }

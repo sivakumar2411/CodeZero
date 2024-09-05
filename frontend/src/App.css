@@ -40,15 +40,40 @@
 
 /********************************************************************/
 
+.LoadingScreenBaseDiv{
+  margin-top: 60px;
+  min-width: 900px;
+  width: 95%;
+  min-height: 600px;
+  height: 90vh;
+  position: absolute;
+  display: grid;
+  place-items: center;
+  backdrop-filter: blur(10px);
+  top: 0;
+  z-index: 5;
+}
+
+.LSMainDiv{
+  width: 30%;
+  height: 30%;
+  margin: auto;
+}
+
+/********************************************************************/
+
 .CenterFication{
   display: grid;
   place-items: center;
 }
 
 .DarkBG{
-
   background-color: #1a1a1a;
   color: white;
+}
+
+.DarkBG div{
+  border-color: white;
 }
 
 .DarkMD{
@@ -61,10 +86,18 @@
   box-shadow: 0px 0px 2px .1px black;
 }
 
+.DarkHD:hover{
+  background-color: #404040;
+}
+
 .LightBG{
 
   background-color: #f0f0f0;
   color: black;
+}
+
+.LightBG div{
+  border-color: black;
 }
 
 .LightMD{
@@ -79,4 +112,54 @@
   background-color: lightgrey;
   box-shadow: 0px 0px 3px .1px white;
 
+}
+
+.LightHD:hover{
+  background-color: rgb(235,235,235);
+}
+
+.RedMD{
+  background-color: rgb(255, 51, 40);
+}
+
+.RedSD{
+  background-color: rgb(219, 31, 31);
+}
+
+.RedHD:hover{
+  background-color: rgb(204, 6, 6);
+}
+
+.BlueMD{
+  background-color: #1d2574;
+  color: white;
+}
+
+.BlueMD div{
+  border-color: white;
+}
+
+.BlueSD{
+  background-color: #042c9a;
+}
+
+.BlueHD:hover{
+  background-color: #3456ff;
+}
+
+.GreenMD{
+  background-color: #39ad30;
+  color: white;
+}
+
+.GreenMD div{
+  border-color: white;
+}
+
+.GreenSD{
+  background-color: #2c9e1f;
+}
+
+.GreenHD:hover{
+  background-color: #3fe32d;
 }

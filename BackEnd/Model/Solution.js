@@ -10,7 +10,7 @@ const sol = new mongoose.Schema({
         type:mongoose.Schema.Types.ObjectId,
         ref:'User'
     },
-    lanquage:{
+    language:{
         type:String,
         required:true
     },
@@ -23,11 +23,11 @@ const sol = new mongoose.Schema({
         default:'Attempted'
     },
     executionTime:{
-        type:Float64Array,
+        type:Number,
         default:0
     },
     memoryUsage:{
-        type:Float64Array,
+        type:Number,
         default:0
     },
     submittedAt:{

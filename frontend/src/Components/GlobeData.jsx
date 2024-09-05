@@ -7,8 +7,9 @@ const GlobeData = ({children}) => {
 
     const [Theme,setTheme] = useState(()=>{
         const d = localStorage.getItem("CZTheme");
-        return d?JSON.parse(d):{BG:"DarkBG",MD:"DarkMD",SD:"DarkSD"}
+        return d?JSON.parse(d):{BG:"DarkBG",MD:"DarkMD",SD:"DarkSD",HD:"DarkHD",name:"Dark(Default)"}
     })
+    const [ThemeOptVisi,setTOV] = useState("hidden");
 
     useEffect(()=>{
         localStorage.setItem("CZTheme",JSON.stringify(Theme));
@@ -37,7 +38,7 @@ const GlobeData = ({children}) => {
   },[LoggedIn,User])
 
   return (
-    <ThemeContext.Provider value={{Theme,setTheme}}>
+    <ThemeContext.Provider value={{Theme,setTheme,ThemeOptVisi,setTOV}}>
         <UserContext.Provider value={UserContextData}>
           {children}
         </UserContext.Provider>

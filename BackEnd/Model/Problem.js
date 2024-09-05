@@ -2,6 +2,10 @@ import mongoose from "mongoose";
 
 const problem = new mongoose.Schema({
 
+    problemNo:{
+        type:Number,
+        required:true
+    },
     title:{
         type:String,
         required:true

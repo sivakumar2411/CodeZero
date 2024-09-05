@@ -1,6 +1,6 @@
 import express from 'express';
-import { getAllUser, getUserById, postNewUser, updateUser } from '../Controller/UserController.js';
-import { GetAllProblems, GetProblemById, PostNewProblem, UpdateProblem } from '../Controller/ProblemController.js';
+import { getAllUser, getUserById, LogIn, LogOut, postNewUser, updateUser } from '../Controller/UserController.js';
+import { GetAllProblems, GetProblemById, GetProblemWithPAS, PostNewProblem, UpdateProblem } from '../Controller/ProblemController.js';
 import { GetSolutionByIds, PostNewSolution } from '../Controller/SolutionController.js';
 import { Execute } from '../Controller/CodeExecution.js';
 
@@ -8,6 +8,8 @@ const router = express.Router();
 
 //User Routes
 router.post("/User/Insert",postNewUser);
+router.get("/User/LogIn",LogIn);
+router.get("/User/LogOut",LogOut);
 router.put("/User/Update",updateUser);
 router.get("/User/GetAll",getAllUser);
 router.get("/User/GetById/:id",getUserById);
@@ -17,6 +19,7 @@ router.post("/Problem/Insert",PostNewProblem);
 router.put("/Problem/Update",UpdateProblem);
 router.get("/Problem/GetAll",GetAllProblems);
 router.get("/Problem/GetById/:id",GetProblemById);
+router.get("/Problem",GetProblemWithPAS);
 
 //Solution Routes
 router.post("/Solution/InsertNew/:userId/:problemId",PostNewSolution);

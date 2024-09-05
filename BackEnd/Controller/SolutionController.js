@@ -1,3 +1,5 @@
+import { Solution } from "../Model/Solution.js";
+
 export const PostNewSolution = async(req,res)=>{
     try{
         const {problemId,userId} = req.params;

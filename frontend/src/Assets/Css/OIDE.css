@@ -1,12 +1,13 @@
 .OIDEBaseDiv{
     min-width: 910px;
     width: 100%;
-    min-height: 100vh;
-    height: auto;
+    height: 100vh;
+    /* height: auto; */
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    position: relative;
 }
 
 .NavOnOIDE{
@@ -15,6 +16,7 @@
     height: 7vh;
     position: fixed;
     top: 0;
+    z-index: 10;
 }
 
 .OIDEMainDiv{
@@ -50,6 +52,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    border-bottom: 2px groove;
 }
 
 .InputHeadingDiv div,.OutputHeadingDiv div{
@@ -63,9 +66,10 @@
     font-size: 19px;
 }
 
-.RunOnIHD{
+#RunOnIHD{
     cursor: pointer;
-    box-shadow: 0px 0px 2px 1px black;
+    border-radius: 5px;
+    height: 95%;
 }
 
 .InputFieldOnIHD,.OutputFieldOnOHD{
@@ -73,14 +77,16 @@
     height: calc(100% - 40px);
     display: flex;
     justify-content: center;
+    position: relative;
 }
 
 .InputFieldOnIHD textarea{
     resize: none;
     width: 97%;
     height: 95%;
-    background-color: inherit;
+    background-color: transparent;
     border: none;
+    /* outline: none; */
     color: inherit;
     font-size: 18px;
     padding: 5px;
@@ -88,7 +94,7 @@
 
 .OutputFieldOnOHD div{
     width: 100%;
-    height: auto;
+    height: 90%;
     padding: 10px;
     font-size: 18px;
     color: rgb(36, 178, 36);
@@ -97,4 +103,31 @@
 .OutputOnOIDE{
     width: 80%;
     height: 100%;
+}
+
+.OutPutLoadingScreen{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+}
+
+.OutputFieldOnOHD .OutputResult::-webkit-scrollbar{
+    width: 20px;
+    /* border: 1px groove blue; */
+}
+
+.OutputFieldOnOHD .OutputResult::-webkit-scrollbar-thumb{
+    border: 3px solid transparent;
+    background-color: red;
+}
+
+.OutputFieldOnOHD .OutputResult::-webkit-scrollbar-track{
+    /* background-color: green; */
+}
+
+.OutputFieldOnOHD .OutputResult::-webkit-scrollbar-track-piece{
+    /* background-color: blue; */
 }

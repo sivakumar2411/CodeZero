@@ -5,8 +5,15 @@ import Problems from './Components/Problems';
 import Friends from './Components/Friends';
 import OpenIDE from './Components/OpenIDE';
 import ToasterFunc from './Components/ToasterFunc';
+import PageNotFound from './Components/PageNotFound';
+import { useContext } from 'react';
+import { UserContext } from './Components/GlobeData';
+import Sign from './Components/Sign';
 
 function App() {
+
+  const {LoggedIn} = useContext(UserContext);
+
   return (
     <>
     <ToasterFunc/>
@@ -16,6 +23,8 @@ function App() {
       <Route path='/Problems' element={<Problems/>}/>
       <Route path='/Friends' element={<Friends/>}/>
       <Route path='/IDE' element={<OpenIDE/>}/>
+      <Route path='/Sign' element={<Sign/>}/>
+      <Route path='/*' element={<PageNotFound/>}/>
     </Routes>
     </>
   );
