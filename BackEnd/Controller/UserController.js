@@ -5,14 +5,14 @@ import GenerateJWT from "../Util/GenerateToken.js";
 export const postNewUser = async(req,res) =>{
 
     try{
-        const {uname,name,email,password,gender,bio,notifications} = req.body;
+        const {uname,name,email,password} = req.body;
 
         
-        const salt = await bcrypt.getSalt(10);
+        const salt = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(password, salt);
         
         const user = new User({
-            uname,name,email,password:hashedPassword,gender,bio,notifications
+            uname,name,email,password:hashedPassword
         })
         GenerateJWT(user._id,res);
 
@@ -29,15 +29,16 @@ export const postNewUser = async(req,res) =>{
 export const LogIn = async(req,res) =>{
     try{
     const {username,password} = req.body;
-    const User = await User.findOne({uname:username} || {email:username});
+    
+    const user = await User.findOne({uname:username} || {email:username});
 
-    if(!User)
-        return res.status(404).json({message: "User not found"});
-    if(!await bcrypt.compare(password, User.password))
+    if(!user)
+        return res.status(400).json({message: "User not found"});
+    if(!await bcrypt.compare(password, user.password))
         return res.status(400).json({message: "Wrong Password"});
 
-    GenerateJWT(User._id,res);
-    res.json({message: "Logged In Successfully"});}
+    GenerateJWT(user._id,res);
+    res.json({user});}
     catch(error){
         res.status(500).json({message:error.message});
         console.log("Error at Login "+error.message);

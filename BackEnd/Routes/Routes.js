@@ -8,7 +8,7 @@ const router = express.Router();
 
 //User Routes
 router.post("/User/Insert",postNewUser);
-router.get("/User/LogIn",LogIn);
+router.post("/User/LogIn",LogIn);
 router.get("/User/LogOut",LogOut);
 router.put("/User/Update",updateUser);
 router.get("/User/GetAll",getAllUser);

@@ -1,14 +1,14 @@
 import jwt from 'jsonwebtoken';
 
 const GenerateJWT = (id,res) =>{
-    const jwt = jwt.sign({id},process.env.Secret_Key,{
+    const jwtt = jwt.sign({id},process.env.Secret_Key,{
         expiresIn:'15d'
     })
-    res.cookie("jwt",jwt,{
-        maxAge:15 * 24 * 60 * 60 * 1000,
+    res.cookie("jwt",jwtt,{
+        maxAge:3 * 24 * 60 * 60 * 1000,
         httpOnly:true,
         // secure:true,
-        // sameSite:"strict"
+        sameSite:"strict"
     })
 }
 

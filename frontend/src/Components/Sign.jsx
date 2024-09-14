@@ -1,5 +1,8 @@
 import React, { useContext, useState } from 'react';
-import { ThemeContext, UserContext } from './GlobeData'
+import { ThemeContext, UserContext } from './GlobeData';
+import '../Assets/Css/Sign.css';
+import SignIn from './SignIn';
+import SignUp from './SignUp';
 
 
 const Sign = () => {
@@ -13,6 +16,9 @@ const Sign = () => {
     <div className={`SignBaseDiv ${Theme.BG}`}>
         {(LoggedIn)?<></>:
         <>
+        <div className={`SignMainDiv ${Theme.MD}`}>
+          {(logIn)?<SignIn props={{setLogIn}}/>:<SignUp props={{setLogIn}}/>}
+        </div>
         </>}
     </div>
   )
