@@ -23,7 +23,7 @@ const IDE = ({props}) => {
     <div className={`IDEMainDiv ${Theme.BG}`} onClick={(event)=>{event.preventDefault();}}>
     <div className={`HeadingOnIDE ${Theme.MD}`}>
       <div className={`LanguageSelectionOnIDE ${Theme.HD}`}>
-        <div className='SelectedOptionOnIDE' onClick={(event)=>{event.stopPropagation();setOV(!optVisi)}}>{langName} <ExpandMoreIcon/></div>
+        <div className='SelectedOptionOnIDE' onClick={(event)=>{event.stopPropagation();setOV(!optVisi)}}>{langName} <ExpandMoreIcon style={{transform:(optVisi)?"rotateZ(180deg)":"",transition:"all 0.3s ease"}}/></div>
         {(optVisi)?<div className={`LanguageOptions ${Theme.SD}` }>{CLChoice.map((choice,index)=>(
           <div key={index} className={`${Theme.HD}`} onClick={(event)=>{event.preventDefault();handleSelection(choice);setOV(false)}}>{choice.Name}</div>
         ))}

@@ -65,3 +65,10 @@
     z-index: 21;
     /* background-color: white; */
 }
+
+#LogInOnNavBar{
+    border-radius: 10px;
+    width: auto;
+    height: auto;
+    padding: 5px 7px 5px 7px;
+}

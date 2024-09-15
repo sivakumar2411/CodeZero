@@ -11,7 +11,7 @@ import LoadingScreen from './LoadingScreen';
 
 const OpenIDE = () => {
 
-    const {Theme,ThemeOptVisi,setTOV} = useContext(ThemeContext);
+    const {Theme,setTOV} = useContext(ThemeContext);
 
     const [val,setVal] = useState("console.log(\"Hello World!\");");
     const [language,setL] = useState("javascript");
@@ -47,7 +47,7 @@ const OpenIDE = () => {
         </div>
 
     <div className="OIDEMainDiv">
-        <LoadingScreen props={{visi:LoadingScreenVisi,setVisi:setLSV}}/>
+        {/* <LoadingScreen props={{visi:LoadingScreenVisi,setVisi:setLSV}}/> */}
         <div className={`IDEDivOnOIDE ${Theme.MD}`}>
           <IDE props={{val,setVal,language,setL,optVisi,setOV}}/>
         </div>

@@ -3,7 +3,7 @@ import { ThemeContext } from './GlobeData'
 import Navbar from './Navbar';
 import '../Assets/Css/Problems.css'
 import { IoSearch } from "react-icons/io5";
-import { FaAngleDown } from "react-icons/fa6";
+import { FaAngleDown, FaChevronDown } from "react-icons/fa6";
 import { AiFillThunderbolt } from "react-icons/ai";
 import { SiTicktick } from "react-icons/si";
 import { FaChevronUp } from "react-icons/fa";
@@ -13,16 +13,13 @@ const Problems = () => {
 
     const [diff,setdiff] = useState('Difficulty');
 
-    const {Theme} = useContext(ThemeContext);
+    const {Theme,setTOV} = useContext(ThemeContext);
     // const [status,Setstatus] = useState(false);
     // const [diff,Setdiff] = useState(false);
     const [show,Setshow] = useState(null);
 
     const HandleMenuSection = (st) =>{
-        if(show === null)
-            Setshow(st);
-        else if(show === st)
-            Setshow(null);
+        Setshow(st);
     }
 
     const TopicsArray = [
@@ -46,7 +43,7 @@ const Problems = () => {
     ];
 
   return (
-    <div className={`ProblemsBaseDiv ${Theme.BG}`}>
+    <div className={`ProblemsBaseDiv ${Theme.BG}`} onClick={()=>{setTOV("hidden");Setshow("")}}>
 
         <div className="NavOnProblems">
             <Navbar/>
@@ -58,7 +55,7 @@ const Problems = () => {
                         <IoSearch /><input type="search" name="" id="" placeholder='Search' />
                     </div>
                     <div className="selectdifficulty">
-                        <div className={`diffsec ${Theme.MD}`} onClick={()=>HandleMenuSection('Diff')}>{diff} {show === 'Diff' ? <FaChevronUp />: <FaAngleDown />}
+                        <div className={`diffsec ${Theme.MD}`} onClick={(event)=>{event.stopPropagation();HandleMenuSection('Diff')}}>{diff} <FaChevronDown style={{transform:(show === "Diff")?"rotateZ(180deg)":"",transition:"all .3s ease"}}/>
                         {show === 'Diff' ? (
                             <div className={`diff-menu ${Theme.SD}`}>
                                 <label onClick={()=>{setdiff('Easy')}}> Easy
@@ -70,7 +67,7 @@ const Problems = () => {
                             </div>
                         ) : null}
                     </div>
-                        <div className={`statussec ${Theme.MD}`}  onClick={()=>HandleMenuSection('Diff')}>Status {show === 'Status' ? <FaChevronUp />: <FaAngleDown />}
+                        <div className={`statussec ${Theme.MD}`}  onClick={(event)=>{event.stopPropagation();HandleMenuSection('Status')}}>Status <FaChevronDown style={{transform:(show === "Status")?"rotateZ(180deg)":"",transition:"all .3s ease"}}/>
                         {show === 'Status' ? (
                             <div className={`diff-menu ${Theme.SD}`}>
                                 <label>

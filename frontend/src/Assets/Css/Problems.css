@@ -46,7 +46,7 @@
     background: none;
     outline: none;
     border: none;
-    color: white;
+    /* color: white; */
     font-family: Poppins;
     margin-left: 5px;
     width: 400px;
@@ -71,7 +71,7 @@
     padding-right: 10px;
     font-size: 20px;
     font-family: Mulish;
-    color: white;
+    /* color: white; */
     /* border: 1px solid white; */
     border-radius: 5px;
     cursor: pointer;
@@ -92,7 +92,7 @@
     padding-right: 10px;
     font-size: 20px;
     font-family: Mulish;
-    color: white;
+    /* color: white; */
     border-radius: 5px;
     cursor: pointer;
     position: relative;

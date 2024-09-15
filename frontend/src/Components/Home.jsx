@@ -99,7 +99,7 @@ const Home = () => {
         {faqarr.map((eachfaq,index)=>
         <>
           <div className="eachfaq" key={index}>
-          <p style={{color:"white",fontSize:"20px",textAlign:"start"}}>{eachfaq.qs}</p>
+          <p style={{fontSize:"20px",textAlign:"start"}}>{eachfaq.qs}</p>
           {showopn === index ? <FiMinusCircle onClick={()=>{toggleFAQ(index)}} />:<IoMdAddCircleOutline onClick={()=>{toggleFAQ(index)}} />}
           </div>
             {showopn === index?<p style={{fontSize:"18px",textAlign:"start",marginLeft:"30px",textIndent:"10px",color:"gold"}}>{eachfaq.ans}</p>:null}

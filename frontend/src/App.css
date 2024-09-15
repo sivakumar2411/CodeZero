@@ -156,6 +156,11 @@
 
 .RedMD{
   background-color: rgb(255, 51, 40);
+  color: white;
+}
+
+.RedMD div{
+  border-color: white;
 }
 
 .RedSD{

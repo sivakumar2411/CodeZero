@@ -51,7 +51,7 @@ const Navbar = () => {
           {(LoggedIn)?<><div className={`NavItems NItem-1 ${Theme.HD}`}><NotificationsIcon /></div>
           <div className={`NavItems NItem-2 ${Theme.HD}`}><PiBrain size={20}/></div>
           <div className="NavItems NItem-3"><img style={{width:"100%",height:"100%",borderRadius:"50%"}} src={User?User.profilePic:Boy} alt={Boy}/></div></>:
-          <div div className="NavItems NItem-1 LogInOnNavBar" onClick={(event)=>{event.preventDefault();navi("/Sign")}}>LogIn</div>}
+          <div div className={`NavItems NItem-1 ${Theme.HD}`} id='LogInOnNavBar' onClick={(event)=>{event.preventDefault();navi("/Sign")}}>LogIn</div>}
           <div className={`NavItems NItem-4 ${Theme.HD}`} onClick={(event)=>{event.stopPropagation();setTOV("visible");}}>{Theme.BG.includes("Dark")?<NightsStayIcon/>:<LightModeIcon/>}
             <div className={`ThemeSelector ${Theme.SD}`} style={{visibility:ThemeOptVisi}} >
               {(ThemeOptVisi)?<>

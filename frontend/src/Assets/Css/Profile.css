@@ -1,0 +1,16 @@
+.ProfileBaseDiv{
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.NavOnProfile{
+    min-width: 910px;
+    width: 100%;
+    height: 7vh;
+    position: fixed;
+    top: 0;
+}
