@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { ThemeContext } from './GlobeData'
 import Navbar from './Navbar';
 import '../Assets/Css/Problems.css'
@@ -8,15 +8,17 @@ import { AiFillThunderbolt } from "react-icons/ai";
 import { SiTicktick } from "react-icons/si";
 import { FaChevronUp } from "react-icons/fa";
 import { Topic } from '@mui/icons-material';
+import { GetProbsWithPageAndSort } from '../API/ProblemApi';
 
 const Problems = () => {
 
     const [diff,setdiff] = useState('Difficulty');
 
-    const {Theme,setTOV} = useContext(ThemeContext);
+    const {Theme,setTOV,setUOV} = useContext(ThemeContext);
     // const [status,Setstatus] = useState(false);
     // const [diff,Setdiff] = useState(false);
     const [show,Setshow] = useState(null);
+    const [problems,setProbs] = useState({});
 
     const HandleMenuSection = (st) =>{
         Setshow(st);
@@ -42,8 +44,18 @@ const Problems = () => {
         { id: 17, name: 'Concurrency' }
     ];
 
+    useEffect(()=>{
+        const fetchProbs = async()=>{
+            const res = await GetProbsWithPageAndSort();
+            console.log(res);
+            
+        }
+
+        fetchProbs();
+    },[])
+
   return (
-    <div className={`ProblemsBaseDiv ${Theme.BG}`} onClick={()=>{setTOV("hidden");Setshow("")}}>
+    <div className={`ProblemsBaseDiv ${Theme.BG}`} onClick={()=>{setTOV(false);Setshow("");setUOV(false);}}>
 
         <div className="NavOnProblems">
             <Navbar/>
@@ -99,16 +111,18 @@ const Problems = () => {
                     </div>
                     <div id="bodyboxright">
                             <div className={`probheadlist ${Theme.MD}`}>
-                                <div id="probheadlistitem1">Status</div>
-                                <div id="probheadlistitem2">Title</div>
-                                <div id="probheadlistitem3">Will Points</div>
-                                <div id="probheadlistitem4">Difficulty</div>
+                                <div>Title</div>
+                                <div>Topics</div>
+                                <div>Difficulty</div>
+                                <div>Status</div>
                             </div>
-                            <div className={`headlist  ${Theme.MD}`}>
-                                <div id="headlistitem1"><SiTicktick /></div>
-                                <div id="headlistitem2">Title</div>
-                                <div id="headlistitem3"><AiFillThunderbolt />40</div>
-                                <div id="headlistitem4">Difficulty</div>
+                            <div className={`ProblemSetDiv  ${Theme.MD}`}>
+                                <div className={`probheadlist  ${Theme.MD}`}>
+                                    <div>Title</div>
+                                    <div>Topics</div>
+                                    <div>Difficulty</div>
+                                    <div><SiTicktick /></div>
+                                </div>
                             </div>
                     </div>
                 </div>

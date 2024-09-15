@@ -5,10 +5,10 @@ import '../Assets/Css/Friends.css'
 
 const Friends = () => {
 
-    const {Theme,setTOV} = useContext(ThemeContext);
+    const {Theme,setTOV,setUOV} = useContext(ThemeContext);
 
   return (
-    <div className={`FriendsBaseDiv ${Theme.BG}`} onClick={()=>{setTOV("hidden")}}>
+    <div className={`FriendsBaseDiv ${Theme.BG}`} onClick={()=>{setTOV(false);setUOV(false);}}>
 
         <div className="NavOnFriends">
             <Navbar/>

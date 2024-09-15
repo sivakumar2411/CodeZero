@@ -10,6 +10,8 @@ import { useContext } from 'react';
 import { UserContext } from './Components/GlobeData';
 import Sign from './Components/Sign';
 import Profile from './Components/Profile';
+import Contribute from './Components/Contribute';
+import DesEditor from './Components/DesEditor';
 
 function App() {
 
@@ -26,6 +28,8 @@ function App() {
       <Route path='/IDE' element={<OpenIDE/>}/>
       <Route path='/Sign' element={<Sign/>}/>
       <Route path='/Profile' element={<Profile/>}/>
+      <Route path='/Contribute' element={<Contribute/>}/>
+      <Route path='/Editor' element={<DesEditor/>}/>
       <Route path='/*' element={<PageNotFound/>}/>
     </Routes>
     </>

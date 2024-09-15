@@ -11,7 +11,7 @@ export const PostNewProblem = async(req,res) =>{
 
     
 
-    res.status(201).json({msg: "New problem created successfully", data: newProblem});
+    res.status(201).json({newProblem});
     }
     catch(error){
         res.status(500).json({error: error.message});
@@ -24,7 +24,7 @@ export const UpdateProblem = async(req, res) => {
     try {
         const updatedProblem = await Problem.findByIdAndUpdate(req.params.id, req.body, {new: true});
         if (!updatedProblem) return res.status(404).json({msg: "Problem not found"});
-        res.status(200).json({msg: "Problem updated successfully", data: updatedProblem});
+        res.status(200).json({updatedProblem});
         
     } catch (error) {
         res.status(500).json({error: error.message});
@@ -36,7 +36,7 @@ export const UpdateProblem = async(req, res) => {
 export const GetAllProblems = async (req, res) => {
     try {
         const problems = await Problem.find();
-        res.status(200).json({data: problems});
+        res.status(200).json({ problems});
         
     } catch (error) {
         res.status(500).json({error: error.message});
@@ -49,7 +49,7 @@ export const GetProblemById = async (req, res) => {
     try {
         const problem = await Problem.findById(req.params.id);
         if (!problem) return res.status(404).json({msg: "Problem not found"});
-        res.status(200).json({data: problem});
+        res.status(200).json({ problem});
         
     } catch (error) {
         res.status(500).json({error: error.message});
@@ -71,7 +71,7 @@ export const GetProblemWithPAS = async(req,res) =>{
         const allProblems = await Problem.countDocuments();
         const totPages = Math.ceil(allProblems/30);
 
-        res.status(200).json({data:allProblems});
+        res.status(200).json({allProblems});
     }
     catch(error){
         res.status(500).json({error:error.message});

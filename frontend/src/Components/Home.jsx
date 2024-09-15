@@ -28,10 +28,10 @@ const Home = () => {
     {id:6,qs:"Does CodeZero offer solutions or hints?",ans:"Yes, you can view hints and solutions to learn different coding approaches.But it will be affect your Will Points"}
   ];
 
-    const {Theme} = useContext(ThemeContext);
+    const {Theme,setTOV,setUOV} = useContext(ThemeContext);
 
   return (
-    <div className={`HomeBaseDiv ${Theme.BG}`}>
+    <div className={`HomeBaseDiv ${Theme.BG}`} onClick={()=>{setUOV(false);setTOV(false);}}>
 
         <div className="NavOnHome">
             <Navbar/>
