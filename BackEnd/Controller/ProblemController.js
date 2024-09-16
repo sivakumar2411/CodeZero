@@ -4,9 +4,9 @@ import { Problem } from "../Model/Problem.js";
 export const PostNewProblem = async(req,res) =>{
 
     try{
-    const {title,description,difficulty,inputformat,outputformat,constraints,sampleinput,sampleoutput,ogs,topics} = req.body;
-
-    const newProblem = new Problem({title,description,difficulty,inputformat,outputformat,constraints,sampleinput,sampleoutput,ogs});
+    const {title,description,inputformat,outputformat,constraints,sampletestcases,ogs,topics} = req.body;
+    const maxNo = Math.max((await Problem.find()).filter(({problemNo})=>problemNo),0);
+    const newProblem = new Problem({problemNo:maxNo +1,title,description,inputformat,outputformat,constraints,sampletestcases,ogs,topics});
     await newProblem.save();
 
     

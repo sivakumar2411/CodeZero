@@ -29,7 +29,6 @@ function App() {
       <Route path='/Sign' element={<Sign/>}/>
       <Route path='/Profile' element={<Profile/>}/>
       <Route path='/Contribute' element={<Contribute/>}/>
-      <Route path='/Editor' element={<DesEditor/>}/>
       <Route path='/*' element={<PageNotFound/>}/>
     </Routes>
     </>

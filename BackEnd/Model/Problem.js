@@ -16,7 +16,8 @@ const problem = new mongoose.Schema({
     },
     difficulty:{
         type:String,
-        required:true
+        // required:true
+        default:"Easy"
     },
     inputformat:{
         type:String,
@@ -30,14 +31,12 @@ const problem = new mongoose.Schema({
         type:String,
         required:true
     },
-    sampleinput:{
-        type:String,
-        required:true
-    },
-    sampleoutput:{
-        type:String,
-        required:true
-    },
+    sampletestcases:[
+        {
+            type:mongoose.Schema.Types.ObjectId,
+            ref:'TestCase'
+        }
+    ],
     createdAt:{
         type:Date,
         default:Date.now
@@ -49,6 +48,17 @@ const problem = new mongoose.Schema({
     ogs:{
         language:{type:String, required:true},
         solution:{type:String, required:true}
+    },
+    codesnips:[
+        {
+            lang:{type:String,required:true},
+            hiddensnips:{type:String, required:true},
+            visisnips:{type:String, required:true}
+        }
+    ],
+    status:{
+        type:String,
+        default:"Reqs"
     }
 
 })

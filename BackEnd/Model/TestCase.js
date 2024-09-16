@@ -14,10 +14,6 @@ const tc =new mongoose.Schema({
         type: String,
         required: true
     },
-    isSample:{
-        type: Boolean,
-        default: false
-    },
     createdAt:{
         type: Date,
         default: Date.now
