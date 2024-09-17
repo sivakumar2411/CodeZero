@@ -1,21 +1,25 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import { ThemeContext } from './GlobeData';
+import '../Assets/Css/IDE.css';
 
-const DesEditor = () => {
-  const [editorData, setEditorData] = useState('');
+const DesEditor = ({props}) => {
+  const {Theme} = useContext(ThemeContext);
+  const {val,setval} = props;
 
   return (
-    <div style={{width:'100%',height:"100vh"}}>
-      <CKEditor
+    <div className={`DesEditorMainDiv`} style={{width:'100%',height:"100%",color:"black",overflowY:"auto"}}>
+      <CKEditor 
         editor={ClassicEditor}
-        data={editorData}
+        data={val}
         onChange={(event, editor) => {
           const data = editor.getData();
-          setEditorData(data);
+          setval(data);
         }}
         config={{
           toolbar: [
+            'undo', 'redo', 'removeFormat', '|',
             'heading', '|',
             'bold', 'italic', 'underline', 'strikethrough', 'superscript', 'subscript', '|',
             'link', 'bulletedList', 'numberedList', 'blockQuote', '|',
@@ -24,14 +28,11 @@ const DesEditor = () => {
             'alignment', 'outdent', 'indent', '|',
             'fontFamily', 'fontSize', 'fontColor', 'fontBackgroundColor', '|',
             'specialCharacters', 'highlight', '|',
-            'undo', 'redo', 'removeFormat', '|',
             'code', 'codeBlock', 'sourceEditing', '|',
             'horizontalLine', 'pageBreak'
           ],
           language: 'en',
         }}
-
-        style={{width:"100%",height:"100%",overflowY:"auto"}}
       />
     </div>
   );

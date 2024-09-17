@@ -32,7 +32,7 @@ export const LightTheme = [
 
 
 
-export const PageNotFound = PNF;
+export const PageNotFoundd = PNF;
 export const Error500 = Err500;
 export const CodeCompileLoaded = CodeCompile;
 export const LoadingScr = Loading;

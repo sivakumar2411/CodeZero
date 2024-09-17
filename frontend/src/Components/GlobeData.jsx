@@ -49,19 +49,21 @@ const GlobeData = ({children}) => {
     LogIn:(data)=>{setLI(true);setUser(data);
       const encryptUser = CryptoJS.AES.encrypt(JSON.stringify(data),Secret_Key).toString();
       localStorage.setItem("CZUser",encryptUser);
+      localStorage.setItem("CZLoggedIn",JSON.stringify(true));
     },
     LogOut:()=>{setLI(false);setUser({});
     localStorage.removeItem("CZUser");
+    localStorage.removeItem("CZLoggedIn");
   }
   }},[LoggedIn,User])
 
-  useEffect(()=>{
-    const LogEff =()=>{
-      localStorage.setItem("CZLoggedIn",JSON.stringify(LoggedIn));
-    }
+  // useEffect(()=>{
+  //   const LogEff =()=>{
+  //     localStorage.setItem("CZLoggedIn",JSON.stringify(LoggedIn));
+  //   }
 
-    LogEff();
-  },[LoggedIn])
+  //   LogEff();
+  // },[LoggedIn])
 
   return (
     <ThemeContext.Provider value={{Theme,setTheme,ThemeOptVisi,setTOV,UserOptVisi,setUOV}}>

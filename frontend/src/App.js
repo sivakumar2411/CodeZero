@@ -11,11 +11,11 @@ import { UserContext } from './Components/GlobeData';
 import Sign from './Components/Sign';
 import Profile from './Components/Profile';
 import Contribute from './Components/Contribute';
-import DesEditor from './Components/DesEditor';
+import Admin from './Components/Admin';
 
 function App() {
 
-  const {LoggedIn} = useContext(UserContext);
+  const {LoggedIn,User} = useContext(UserContext);
 
   return (
     <>
@@ -27,8 +27,12 @@ function App() {
       <Route path='/Friends' element={<Friends/>}/>
       <Route path='/IDE' element={<OpenIDE/>}/>
       <Route path='/Sign' element={<Sign/>}/>
+      {(LoggedIn)?<>
       <Route path='/Profile' element={<Profile/>}/>
       <Route path='/Contribute' element={<Contribute/>}/>
+      {(User?.admin)?<>
+      <Route path='/Admin' element={<Admin/>}/></>:null}
+      </>:null}
       <Route path='/*' element={<PageNotFound/>}/>
     </Routes>
     </>

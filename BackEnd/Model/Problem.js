@@ -19,18 +19,6 @@ const problem = new mongoose.Schema({
         // required:true
         default:"Easy"
     },
-    inputformat:{
-        type:String,
-        required:true
-    },
-    outputformat:{
-        type:String,
-        required:true
-    },
-    constraints:{
-        type:String,
-        required:true
-    },
     sampletestcases:[
         {
             type:mongoose.Schema.Types.ObjectId,
