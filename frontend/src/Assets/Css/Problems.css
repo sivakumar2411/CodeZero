@@ -1,6 +1,7 @@
 .ProblemsBaseDiv{
     width: 100%;
     min-height: 100vh;
+    min-width: 680px;
     display: flex;
     /* justify-content: center; */
     /* align-items: center; */
@@ -10,7 +11,7 @@
 }
 
 .NavOnProblems{
-    min-width: 910px;
+    min-width: 680px;
     width: 100%;
     height: 7vh;
     position: fixed;

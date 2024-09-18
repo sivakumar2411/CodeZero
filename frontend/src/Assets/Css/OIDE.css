@@ -1,7 +1,8 @@
 .OIDEBaseDiv{
-    min-width: 910px;
+    min-width: 680px;
     width: 100%;
     height: 100vh;
+    min-height: 700px;
     /* height: auto; */
     display: flex;
     justify-content: center;
@@ -11,7 +12,7 @@
 }
 
 .NavOnOIDE{
-    min-width: 910px;
+    min-width: 680px;
     width: 100%;
     height: 7vh;
     position: fixed;
@@ -21,7 +22,7 @@
 
 .OIDEMainDiv{
     margin-top: 60px;
-    min-width: 900px;
+    min-width: 680px;
     width: 95%;
     min-height: 600px;
     height: 90vh;

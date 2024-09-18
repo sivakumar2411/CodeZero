@@ -56,7 +56,7 @@ const user = new mongoose.Schema({
         type:Boolean,
         default:false
     },
-    ContributionProbs:[
+    ContributedProbs:[
         {
             probID:{
                 type:mongoose.Schema.Types.ObjectId,
@@ -64,7 +64,7 @@ const user = new mongoose.Schema({
             }
         }
     ],
-    ContrubutedTestCases:[
+    ContributedTestCases:[
         {
             testCaseID:{
                 type:mongoose.Schema.Types.ObjectId,

@@ -1,6 +1,7 @@
 .SignBaseDiv{
     width: 100%;
     height: 100vh;
+    min-width: 680px;
     min-height: auto;
     display: flex;
     justify-content: center;

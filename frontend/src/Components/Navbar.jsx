@@ -35,9 +35,6 @@ const Navbar = () => {
     else if(Friends.length > 0)
     setCP("F");
     else setCP("");
-    
-    console.log(User);
-    
 
   },[])
 

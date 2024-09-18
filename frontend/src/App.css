@@ -63,6 +63,9 @@
 .SignInButton{
   transition: 0.5s;
   border: 1px groove rgb(9, 169, 9);
+  display: grid;
+  place-items: center;
+  outline: none;
   color: rgb(9, 169, 9);
 }
 
@@ -77,6 +80,9 @@
 .SignUpButton{
   transition: 0.5s;
   border: 1px groove rgb(22, 80, 187);
+  display: grid;
+  place-items: center;
+  outline: none;
   color: rgb(12, 9, 169);
 }
 

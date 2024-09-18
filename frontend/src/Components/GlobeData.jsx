@@ -20,8 +20,12 @@ const GlobeData = ({children}) => {
 
 
   const [LoggedIn,setLI] = useState(()=>{
-    const d = localStorage.getItem("CZLoggedIn");
-        return d?JSON.parse(d):false
+    const d1 = localStorage.getItem("CZUser");
+    if(d1)
+    {const d = localStorage.getItem("CZLoggedIn");
+    return d?JSON.parse(d):false}
+    localStorage.removeItem("CZLoggedIn");
+    return false;
   })
   const [User,setUser] = useState({});
   useEffect(()=>{
@@ -31,7 +35,7 @@ const GlobeData = ({children}) => {
     try{
       const bytes = CryptoJS.AES.decrypt(d,Secret_Key);
       const newd = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
-      console.log(newd);
+      // console.log(newd);
       
       setUser(newd);
     }

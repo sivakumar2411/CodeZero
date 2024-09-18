@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import '../Assets/Css/TextInput.css';
 import { ThemeContext } from './GlobeData';
 
@@ -8,7 +8,12 @@ const TextInput = ({props}) => {
   const [foc,setFoc] = useState("");
   const {Theme} = useContext(ThemeContext);
 
-
+  useEffect(()=>{
+    if(val.length === 0)
+      setFoc("");
+    else
+      setFoc("Focused");
+  },[val])
 
   return (
     <div className={`TextInputBaseDiv ${foc}TIBD`}>

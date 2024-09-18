@@ -9,7 +9,13 @@ const tp = new mongoose.Schema({
     description:{
         type:String,
         required:true
-    }
+    },
+    problems:[
+        {
+            type:mongoose.Schema.Types.ObjectId,
+            ref:'Problem'
+        }
+    ]
 
 })
 

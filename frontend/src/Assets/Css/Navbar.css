@@ -3,7 +3,7 @@
     height: 50px;
     display: grid;
     font-size: 17px;
-    grid-template-columns: 20% 50% 30%;
+    grid-template-columns: 1fr 3.5fr 3fr;
 }
 
 .LogoOnNav{
@@ -22,8 +22,9 @@
 }
 
 .LeftNavDiv .NavItems{
-    width: 150px;
-    max-width: 300px;
+    min-width: 100px;
+    max-width: 200px;
+    width: auto;
     height: 97%;
     display: grid;
     place-items: center;

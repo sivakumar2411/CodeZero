@@ -47,6 +47,16 @@ const problem = new mongoose.Schema({
     status:{
         type:String,
         default:"Reqs"
+    },
+    topics:[
+        {
+            type:mongoose.Schema.Types.ObjectId,
+            ref:'Topic'
+        }
+    ],
+    creater:{
+        type:mongoose.Schema.Types.ObjectId,
+        ref:'User'
     }
 
 })

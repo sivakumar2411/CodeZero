@@ -17,13 +17,22 @@ export const postNewUser = async(req,res) =>{
         GenerateJWT(user._id,res);
 
         await user.save();
-        res.status(201).json({uname:user.uname,name:user.name,id:user._id,profilePic:user.profilePic,notifi:user.notifications,will:user.will,admin:user.admin});
+        res.status(201).json({uname:user.uname,name:user.name,id:user._id,profilePic:user.profilePic,notifi:user.notifications,will:user.will,admin:user.admin,contc:user.ContributedTestCases || [],conp:user.ContributedProbs || []});
     }
     catch(error){
         res.status(500).json({message:error.message});
         console.log("Error at Post New User "+error.message);
     }
 
+}
+
+export const UpdateTCandQues = async(uid,attribute,nv) =>{
+    try{
+        const res = await User.findByIdAndUpdate(uid,{$push:{[attribute]:nv}});
+    }
+    catch(error){
+        console.log("Error at Update Testcase and Questions in User "+error.message);
+    }
 }
 
 export const LogIn = async(req,res) =>{
@@ -38,7 +47,7 @@ export const LogIn = async(req,res) =>{
         return res.status(400).json({message: "Wrong Password"});
 
     GenerateJWT(user._id,res);
-    res.json({uname:user.uname,name:user.name,id:user._id,profilePic:user.profilePic,notifi:user.notifications,will:user.will,admin:user.admin});}
+    res.json({uname:user.uname,name:user.name,id:user._id,profilePic:user.profilePic,notifi:user.notifications,will:user.will,admin:user.admin,contc:user.ContributedTestCases || [],conp:user.ContributedProbs || []});}
     catch(error){
         res.status(500).json({message:error.message});
         console.log("Error at Login "+error.message);

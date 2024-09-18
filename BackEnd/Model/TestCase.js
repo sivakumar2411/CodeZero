@@ -4,7 +4,8 @@ const tc =new mongoose.Schema({
 
     problemId: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "Problem"
+        ref: "Problem",
+        required:true
     },
     input: {
         type: String,
