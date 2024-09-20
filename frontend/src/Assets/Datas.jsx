@@ -3,7 +3,7 @@ import Err500 from './Lottie/Animation - 1725446369208.json';
 import CodeCompile from './Lottie/8ZAgfVvoQW.json';
 import Loading from './Lottie/Animation - 1725467987093.json';
 import boy from './Images/boy.webp';
-import threebgm from './Audio/3.mpeg'
+import threebgm from './Audio/3.mpeg';
 
 
 export const CLChoice = [
@@ -31,7 +31,8 @@ export const LightTheme = [
 
 
 
-export const PageNotFound = PNF;
+
+export const PageNotFoundd = PNF;
 export const Error500 = Err500;
 export const CodeCompileLoaded = CodeCompile;
 export const LoadingScr = Loading;
@@ -39,3 +40,4 @@ export const LoadingScr = Loading;
 export const ThreeBGM = threebgm;
 
 export const Boy = boy;
+export const Secret_Key = "Secret_KEY";

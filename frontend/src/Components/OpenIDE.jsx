@@ -11,7 +11,7 @@ import LoadingScreen from './LoadingScreen';
 
 const OpenIDE = () => {
 
-    const {Theme,setTOV} = useContext(ThemeContext);
+    const {Theme,setTOV,setUOV} = useContext(ThemeContext);
 
     const [val,setVal] = useState("console.log(\"Hello World!\");");
     const [language,setL] = useState("javascript");
@@ -40,7 +40,7 @@ const OpenIDE = () => {
     },[])
 
   return (
-    <div className={`OIDEBaseDiv ${Theme.BG}`} onClick={(event)=>{event.preventDefault();setOV(false);setTOV("hidden")}}>
+    <div className={`OIDEBaseDiv ${Theme.BG}`} onClick={(event)=>{event.preventDefault();setOV(false);setTOV(false);setUOV(false);}}>
 
         <div className="NavOnOIDE">
             <Navbar/>

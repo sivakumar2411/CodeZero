@@ -33,7 +33,7 @@ const IDE = ({props}) => {
     <Editor 
     height="94%" 
     width="100%" 
-    options={{ minimap:{enabled:false}}}
+    options={{ minimap:{enabled:false},selectOnLineNumbers: true}}
     minimap={{enabled:false}} 
     theme={Theme.BG.includes("Dark")?"vs-dark":"light"}
     defaultLanguage='javascript'

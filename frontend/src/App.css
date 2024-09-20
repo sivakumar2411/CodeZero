@@ -63,6 +63,9 @@
 .SignInButton{
   transition: 0.5s;
   border: 1px groove rgb(9, 169, 9);
+  display: grid;
+  place-items: center;
+  outline: none;
   color: rgb(9, 169, 9);
 }
 
@@ -77,6 +80,9 @@
 .SignUpButton{
   transition: 0.5s;
   border: 1px groove rgb(22, 80, 187);
+  display: grid;
+  place-items: center;
+  outline: none;
   color: rgb(12, 9, 169);
 }
 
@@ -87,6 +93,7 @@
   font-size: 22px;
   box-shadow: -1px 2px 5px 1px rgb(64, 35, 193);
 }
+
 
 /********************************************************************/
 
@@ -111,6 +118,7 @@
 .DarkMD{
   background-color: #232323;
   box-shadow: 0px 0px 3px .1px black;
+  color: rgb(210, 210, 210);
 }
 
 .DarkSD{

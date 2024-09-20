@@ -4,7 +4,8 @@ const tc =new mongoose.Schema({
 
     problemId: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "Problem"
+        ref: "Problem",
+        required:true
     },
     input: {
         type: String,
@@ -13,10 +14,6 @@ const tc =new mongoose.Schema({
     output: {
         type: String,
         required: true
-    },
-    isSample:{
-        type: Boolean,
-        default: false
     },
     createdAt:{
         type: Date,

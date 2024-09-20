@@ -16,7 +16,7 @@ const SignIn = ({props}) => {
   const SISubmit = async(event) => {
     event.preventDefault();
     const res =await LoginUser(udata);
-    LogIn(res.data);
+    await LogIn(res.data);
     navi("/");
   }
   return (

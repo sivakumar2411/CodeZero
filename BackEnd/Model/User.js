@@ -55,7 +55,23 @@ const user = new mongoose.Schema({
     admin:{
         type:Boolean,
         default:false
-    }
+    },
+    ContributedProbs:[
+        {
+            probID:{
+                type:mongoose.Schema.Types.ObjectId,
+                ref:'Problem'
+            }
+        }
+    ],
+    ContributedTestCases:[
+        {
+            testCaseID:{
+                type:mongoose.Schema.Types.ObjectId,
+                ref:'TestCase'
+            }
+        }
+    ]
 
 })
 
