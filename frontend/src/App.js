@@ -18,7 +18,7 @@ function App() {
   return (
     <>
     <ToasterFunc/>
-    <Routes>
+    {/* <Routes>
       <Route path='/' element={<Home/>}/>
       <Route path='/Home' element={<Home/>}/>
       <Route path='/Problems' element={<Problems/>}/>
@@ -27,7 +27,8 @@ function App() {
       <Route path='/Sign' element={<Sign/>}/>
       <Route path='/Profile' element={<Profile/>}/>
       <Route path='/*' element={<PageNotFound/>}/>
-    </Routes>
+    </Routes> */}
+    <Profile/>
     </>
   );
 }

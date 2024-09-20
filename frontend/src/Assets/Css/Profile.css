@@ -2,9 +2,10 @@
     width: 100%;
     min-height: 100vh;
     display: flex;
-    justify-content: center;
+    /* justify-content: center; */
     align-items: center;
     flex-direction: column;
+    font-family: Mulish;
 }
 
 .NavOnProfile{
@@ -13,4 +14,109 @@
     height: 7vh;
     position: fixed;
     top: 0;
+}
+
+.Profiletop{
+    width: 100%;
+    height: 400px;
+    display: flex;
+    align-items: center;
+    column-gap: 50px;
+    background-color: grey;
+}
+.Profpic{
+    width: 150px;
+    height: 150px;
+    border: 2px solid white;
+    margin-left: 300px;
+    border-radius: 15px;
+}
+.ProfName{
+    font-size: 21px;
+}
+.ProfileBottom{
+    display: flex;
+    flex-direction: row;
+    column-gap: 30px;
+    padding-bottom: 50px;
+}
+.ProfileMenu{
+    display: flex;
+    flex-direction: column;
+    row-gap: 30px;
+    /* margin-left: 300px; */
+    width: 250px;
+    height: 200px;
+    margin-top: 50px;
+    /* border: 1px solid white; */
+    justify-content: center;
+}
+.ProfileMenu button{
+    width: 100%;
+    height: 60px;
+    font-size: 20px;
+    text-align: start;
+    outline: none;
+    cursor: pointer;
+    border: 1px solid orangered;
+    color: orangered;
+    background: none;
+}
+.ProfileItem{
+    padding-left: 25px;
+    padding-right: 25px;
+    margin-top: -80px;
+    width: 500px;
+    border-radius: 15px;
+    padding-bottom: 30px;
+    background-color: black;
+}
+.FileInInfo{
+    margin-left: 10%;
+    display: flex;
+    flex-direction: column;
+    row-gap: 10px;
+    font-size: 1.2rem;
+    width: 80%;
+}
+.FileInInfo input{
+    margin-top: 5px;
+    height: 25px;
+    width: 350px;
+    background: none;
+    border: 2px solid gray;
+    outline: none;
+    font-size: 1rem;
+    color: white;
+}
+.FileInInfo select{
+    margin-left: 60px;
+    height: 25px;
+    width: 190px;
+    background: none;
+    border: 2px solid gray;
+    outline: none;
+    font-size: 1rem;
+    color: white;
+    cursor: pointer;
+}
+.FileInInfo option{
+    color: black;
+}
+.FileInInfo button{
+    text-align: center;
+    width: 50%;
+    margin-top: 10px;
+    margin-left: 25%;
+    height: 30px;
+    border: 1.5px solid purple;
+    font-size: 1.3rem;
+    border-radius: 10px;
+    cursor: pointer;
+    background-color: purple;
+    color: white;
+}
+.FileInInfo button:hover{
+    color: purple;
+    background: none;
 }
