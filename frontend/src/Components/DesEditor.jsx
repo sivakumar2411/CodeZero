@@ -1,9 +1,8 @@
 import React, { useContext, useState } from 'react';
-import { CKEditor } from '@ckeditor/ckeditor5-react';
-import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { ThemeContext } from './GlobeData';
 import '../Assets/Css/IDE.css';
-
+import { CKEditor } from '@ckeditor/ckeditor5-react';
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 const DesEditor = ({props}) => {
   const {Theme} = useContext(ThemeContext);
   const {val,setval} = props;

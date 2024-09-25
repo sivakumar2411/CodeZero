@@ -35,22 +35,27 @@ const Profile = () => {
         <div className="NavOnProfile">
             <Navbar/>
         </div>
-        <div className="Profiletop">
+        <div className={`Profiletop ${Theme.MD}`}>
           <img src={boy} alt="" className='Profpic'/>
           <div className='ProfName'>
             <span>Full Name</span><br />
-            <span style={{color:"black"}}>UserName</span>
+            <span style={{color:"grey"}}>UserName</span>
           </div>
         </div>
         <div className="ProfileBottom">
           <div className="ProfileMenu">
-              <button style={{backgroundColor:curr==='info'?'orangered':"",color:curr==='info'?'white':""}} onClick={HandleInfo}>Basic Info</button>
-              <button  style={{backgroundColor:curr==='account'?'orangered':"",color:curr==='account'?'white':""}} onClick={HandleAccount}>Account</button>
+              <div className={`BottomButton ${Theme.MD}`} style={{backgroundColor:curr==='info'?'orangered':"",color:curr==='info'?'white':"",transform:curr==='info'?'':'null'}} onClick={HandleInfo}>Basic Info</div>
+              <div className={`BottomButton ${Theme.MD}`}   style={{backgroundColor:curr==='account'?'orangered':"",color:curr==='account'?'white':""}} onClick={HandleAccount}>Account</div>
           </div>
-          <div className="ProfileItem">
+          <div className={`ProfileItem ${Theme.MD}`}>
             {curr === 'info' ? <>
-              <h2 style={{color:"green"}}>Basic Info</h2>
+              <h2 style={{color:"gold"}}>Basic Info</h2>
               <form action="" className='FileInInfo'>
+                {IsEdit ? <label htmlFor="">
+                  Profile Pic <br />
+                  <input type="file" name="" id="" readOnly={!IsEdit} style={{border:"none"}} />
+                </label>:<></>}
+                
                 <label htmlFor="">
                   Full name <br />
                   <input type="text" name="" id="" readOnly={!IsEdit} />
@@ -69,7 +74,7 @@ const Profile = () => {
                 </label>
                 <label htmlFor="">
                   Bio <br />
-                  <textarea style={{width:"353px",height:"80px",background:"none",color:"white"}} name="" id="" cols="30" rows="10" readOnly={!IsEdit}></textarea>
+                  <textarea style={{width:"450px",height:"120px",background:"none",color:"white"}} name="" id="" cols="30" rows="10" readOnly={!IsEdit}></textarea>
                 </label>
                 <label htmlFor="">
                 {IsEdit ? <><button onClick={HandleSave}>Save</button><button onClick={HandleCancel}>Cancel</button></>:<button onClick={HandleEdit}>Edit</button>}
@@ -78,7 +83,7 @@ const Profile = () => {
             </>
             :null}
             {curr === 'account' ? <>
-              <h2 style={{color:"green"}}>Account Information</h2>
+              <h2 style={{color:"gold"}}>Account Information</h2>
               <form action="" className='FileInInfo'>
               <label htmlFor="">
                   CodeZero Id <br />
