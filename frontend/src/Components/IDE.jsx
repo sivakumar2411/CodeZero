@@ -1,5 +1,5 @@
 import { Editor } from '@monaco-editor/react'
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { ThemeContext } from './GlobeData'
 import '../Assets/Css/IDE.css'
 import { CLChoice } from '../Assets/Datas'
@@ -9,15 +9,17 @@ const IDE = ({props}) => {
 
     const {Theme} = useContext(ThemeContext);
 
-    const {val,setVal,language,setL,optVisi,setOV} = props;
+    const {val,setVal,language,setL,optVisi,setOV,langchange} = props;
 
-    const [langName,setLN] = useState("JavaScript");
+    const [langName,setLN] = useState(()=>{if(language === "")return "JavaScript";else{const l = CLChoice.findIndex(({Lang})=> Lang === language);return CLChoice[l].Name;}});
     
 
     const handleSelection = (data)=>{
       setL(data.Lang);
+      if(langchange)
       setVal(data.data);
       setLN(data.Name);
+      
     }
   return (
     <div className={`IDEMainDiv ${Theme.BG}`} onClick={(event)=>{event.preventDefault();}}>
@@ -36,7 +38,7 @@ const IDE = ({props}) => {
     options={{ minimap:{enabled:false},selectOnLineNumbers: true}}
     minimap={{enabled:false}} 
     theme={Theme.BG.includes("Dark")?"vs-dark":"light"}
-    defaultLanguage='javascript'
+    // defaultLanguage='javascript'
     language={language}
     defaultValue=''
     value={val}

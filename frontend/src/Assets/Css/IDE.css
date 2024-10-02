@@ -11,7 +11,7 @@
 
 .LanguageSelectionOnIDE{
     position: relative;
-    height: 40px;
+    height: 100%;
     display: grid;
     place-items: center;
     cursor: pointer;
@@ -46,8 +46,8 @@
 
 .SelectedOptionOnIDE{
     width: auto;
-    height: 40px;
-    font-size: 20px;
+    height: 100%;
+    font-size: 17px;
     display: flex;
     align-items: center;
     padding-left: 10px;

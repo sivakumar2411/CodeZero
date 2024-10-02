@@ -4,7 +4,7 @@ const problem = new mongoose.Schema({
 
     problemNo:{
         type:Number,
-        required:true
+        // required:true
     },
     title:{
         type:String,
@@ -22,7 +22,7 @@ const problem = new mongoose.Schema({
     sampletestcases:[
         {
             type:mongoose.Schema.Types.ObjectId,
-            ref:'TestCase'
+            ref:'Testcase'
         }
     ],
     createdAt:{
@@ -40,6 +40,7 @@ const problem = new mongoose.Schema({
     codesnips:[
         {
             lang:{type:String,required:true},
+            packsnips:{type:String, required:true},
             hiddensnips:{type:String, required:true},
             visisnips:{type:String, required:true}
         }
@@ -54,7 +55,7 @@ const problem = new mongoose.Schema({
             ref:'Topic'
         }
     ],
-    creater:{
+    creator:{
         type:mongoose.Schema.Types.ObjectId,
         ref:'User'
     }

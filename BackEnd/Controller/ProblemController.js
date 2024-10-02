@@ -8,10 +8,10 @@ import { UpdateTCandQues } from "./UserController.js";
 export const PostNewProblem = async(req,res) =>{
 
     try{
-    const {title,description,inputformat,outputformat,constraints,sampletestcases,ogs,topics,uid} = req.body;
-    const maxNo = (await Problem.find()).reduce((max, { problemNo }) => Math.max(max, problemNo || 0), 0);
+    const {title,description,inputformat,outputformat,constraints,sampletestcases,ogs,topics,uid,codesnips} = req.body;
+    // const maxNo = (await Problem.find()).reduce((max, { problemNo }) => Math.max(max, problemNo || 0), 0);
     const user = await User.findById(uid);
-    const newProblem = new Problem({problemNo:maxNo +1,title,description,inputformat,outputformat,constraints,ogs,topics,creater:user});
+    const newProblem = new Problem({title,codesnips,description,inputformat,outputformat,constraints,ogs,topics,creator:user});
     const np = await newProblem.save();
     
     const TCA = [];
@@ -42,9 +42,33 @@ export const PostNewProblem = async(req,res) =>{
 
 export const UpdateProblem = async(req, res) => {
     try {
-        const updatedProblem = await Problem.findByIdAndUpdate(req.params.id, req.body, {new: true});
-        if (!updatedProblem) return res.status(404).json({msg: "Problem not found"});
-        res.status(200).json({updatedProblem});
+        const TCA = [];
+        for(const a of req.body.sampletestcases)
+        {
+            if(!a._id)
+            {
+                const newTestcase = new Testcase(a);
+                const res = await newTestcase.save();
+                TCA.push(res._id);
+            }
+            else
+            TCA.push(a._id);
+        }
+        var aa = 0,maxNo = 0;
+        if(!req.body.problemNo)
+        {
+            aa = 1;
+            maxNo = (await Problem.find()).reduce((max, { problemNo }) => Math.max(max, problemNo || 0), 0);
+            const updatedProblem = await Problem.findByIdAndUpdate(req.body._id, {...req.body,sampletestcases:TCA,problemNo:maxNo+1}, {new: true});
+            if (!updatedProblem) return res.status(404).json({message: "Problem not found"});
+            res.status(200).json({updatedProblem});
+        }
+        else
+        {
+            const updatedProblem = await Problem.findByIdAndUpdate(req.body._id, {...req.body,sampletestcases:TCA}, {new: true});
+            if (!updatedProblem) return res.status(404).json({message: "Problem not found"});
+            res.status(200).json({updatedProblem});
+        }
         
     } catch (error) {
         res.status(500).json({error: error.message});
@@ -55,7 +79,7 @@ export const UpdateProblem = async(req, res) => {
 
 export const GetAllProblems = async (req, res) => {
     try {
-        const problems = await Problem.find();
+        const problems = await Problem.find().populate("creator").populate("topics").populate("sampletestcases");
         res.status(200).json({ problems});
         
     } catch (error) {
@@ -67,8 +91,8 @@ export const GetAllProblems = async (req, res) => {
 
 export const GetProblemById = async (req, res) => {
     try {
-        const problem = await Problem.findById(req.params.id);
-        if (!problem) return res.status(404).json({msg: "Problem not found"});
+        const problem = await Problem.findById(req.params.id).populate("creator").populate("topics").populate("sampletestcases");
+        if (!problem) return res.status(404).json({message: "Problem not found"});
         res.status(200).json({ problem});
         
     } catch (error) {
@@ -78,20 +102,44 @@ export const GetProblemById = async (req, res) => {
     }
 }
 
+export const GetProblemByName = async (req, res) => {
+    try {
+        const problem = await Problem.findOne({title: { $regex: new RegExp(`^${req.query.name}$`, 'i') }}).populate("topics").populate("sampletestcases");
+        if (!problem) return res.status(404).json({message: "Problem not found"});
+        res.status(200).json({ problem});
+        
+    } catch (error) {
+        res.status(500).json({error: error.message});
+        console.log("Error at Get Problem By Name"+error.message);
+    }
+}
+
 export const GetProblemWithPAS = async(req,res) =>{
     try{
         const page = parseInt(req.query.page) || 1;
+        const ppp = parseInt(req.query.ppp) || 30;
         const sortBy = req.query.sort || 'problemNo';
         const order = req.query.order === 'desc' ? -1:1;
+        const difficulty = req.query.difficulty;
+        const search = req.query.search;
 
-        const skip = (page - 1) * 30;
+        const skip = (page - 1) * ppp;
+        let query = {status:"Accepted"}
 
-        const problems = await Problem.find({}).sort({[sortBy] : order}).skip(skip).limit(30);
+        if(difficulty)
+            query.difficulty = difficulty;
+        if(search)
+            query.title = { $regex: new RegExp(`${search}`, 'i') };
+            
 
-        const allProblems = await Problem.countDocuments();
-        const totPages = Math.ceil(allProblems/30);
+        const problems = await Problem.find(query).sort({[sortBy] : order}).skip(skip).limit(ppp).populate("topics").populate("sampletestcases");
 
-        res.status(200).json({allProblems});
+        // console.log(query);
+        
+        const allProblems = await Problem.countDocuments(query);
+        const totPages = Math.ceil(allProblems/ppp);
+
+        res.status(200).json({problems,top:totPages});
     }
     catch(error){
         res.status(500).json({error:error.message});
@@ -101,7 +149,24 @@ export const GetProblemWithPAS = async(req,res) =>{
 
 export const GetAllProbReqs = async(req, res) =>{
     try{
-        const Probs = await Problem.find({status:"Reqs"});
+        const Probs = await Problem.find({status:"Reqs"}).populate("creator").populate("topics").populate("sampletestcases");
+
+        if(Probs.length === 0)
+            return res.status(404).json({message:"No problems found."});
+        return res.status(200).json({Probs});
+    }
+    catch(error){
+        res.status(500).json({error: error.message});
+        console.log("Error at GetAllProbReqs"+error.message);
+    }
+}
+
+export const GetAllAccProb = async(req, res) =>{
+    try{
+        const Probs = await Problem.find({status:"Accepted"}).populate("creator").populate("topics").populate("sampletestcases");
+
+        if(Probs.length === 0)
+            return res.status(404).json({message:"No problems found."});
         return res.status(200).json({Probs});
     }
     catch(error){
@@ -141,10 +206,41 @@ export const InsertAllTopics = async(req,res) =>{
 export const getAllTopics =async(req,res) =>{
     try{
         const topics = await Topic.find();
-        res.status(200).json({topics});
+        return res.status(200).json({topics});
     }
     catch(error){
         res.status(500).json({error: error.message});
         console.log("Error at Get All Topics"+error.message);
+    }
+}
+
+export const getTestCasesById = async(req,res) =>{
+    try{
+        const tc = await Testcase.find({problemId:req.params.id});
+        return res.status(200).json({tc});
+    }
+    catch(error){
+        res.status(500).json({error: error.message});
+        console.log("Error at Get TestCases"+error.message);
+    }
+}
+
+export const newCases = async(req,res) =>{
+    try{
+        const newCases = req.body;
+
+        for(const c of newCases)
+        {
+            if(!c._id)
+            {
+                const newTestcase = new Testcase(c);
+                await newTestcase.save();
+            }
+        }
+        return res.status(201).json({message:"New Test Cases Created"});
+    }
+    catch(error){
+        res.status(500).json({error: error.message});
+        console.log("Error at newCases"+error.message);
     }
 }

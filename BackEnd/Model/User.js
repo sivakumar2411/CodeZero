@@ -68,8 +68,30 @@ const user = new mongoose.Schema({
         {
             testCaseID:{
                 type:mongoose.Schema.Types.ObjectId,
-                ref:'TestCase'
+                ref:'Testcase'
             }
+        }
+    ],
+    SolvedProbs:[
+        {
+            probID:{
+                type:mongoose.Schema.Types.ObjectId,
+                ref:'Problem'
+            }
+        }
+    ],
+    SavedSolutions:[
+        {
+            probID:{
+                type:mongoose.Schema.Types.ObjectId,
+                ref:'Propblem'
+            },
+            codesnips:[ 
+                {
+                    lang:{type:String,required:true},
+                    cdsnip:{type:String, required:true}
+                }
+            ]
         }
     ]
 

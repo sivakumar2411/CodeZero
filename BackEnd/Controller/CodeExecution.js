@@ -3,10 +3,21 @@ import axios from 'axios';
 // import fs from 'fs';
 // import { stdin } from 'process';
 
-export const Execute =async(req,res) =>{
+export const IDEExecution = async(req,res) =>{
     try{
         const {code,language,input} = req.body;
 
+        res.status(200).json(await Execute({code,language,input}));
+    }
+    catch(error){
+        res.status(500).json({message: error.message});
+        console.log("Error at IDE Execution "+error.message);
+    }
+}
+
+export const Execute =async({code,language,input}) =>{
+    try{
+        
         let Data;
 
         // let command,filename;
@@ -124,11 +135,10 @@ export const Execute =async(req,res) =>{
                 }
                 break;
             default:
-                res.status(400).json({message: 'Unsupported Language'});
-                return;
+                return ({message: 'Unsupported Language'});
         }
         const response = await axios.post("https://emkc.org/api/v2/piston/execute",Data);
-        return res.json({
+        return ({
             stdout: response.data.run.stdout,
             stderr: response.data.run.stderr,
             output: response.data.run.output
@@ -136,8 +146,45 @@ export const Execute =async(req,res) =>{
 
     }
     catch(error){
-        res.status(500).json({message:error.message});
         console.log("Error at executing code "+error.message);
     }
 
 } 
+
+
+export const RunTestCases = async(req,res) =>{
+    try{
+        const {code,language,ocode,olanguage,testcases} = req.body;
+        const results = [];
+        for(let i=0; i<testcases.length; i++)
+        {
+            const {input} = testcases[i];
+            const result = await Execute({code,language,input});
+            const ores = await Execute({code:ocode,language:olanguage,input});
+
+            // console.log(result);
+            
+            if(result.stderr.length > 0)
+                return res.status(404).json({message: result.stderr});
+
+            let Op = result.stdout.split("STDOUT");
+            // console.log(Op);
+            
+
+            results.push({
+                ...testcases[i],
+                expected: ores.output,
+                output: Op.length > 1? Op[1]:Op[0],
+                stdo:Op.length > 1 ? Op[0]:"",
+                isPass:Op.length >1 ? Op[1] === ores.output : Op[0] === ores.output
+            });
+            
+        }
+        
+        return res.status(200).json({results});
+    }
+    catch(error){
+        res.status(500).json({message:error.message});
+        console.log("Error at RunTestCases "+error);
+    }
+}

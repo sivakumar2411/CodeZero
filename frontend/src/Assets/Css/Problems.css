@@ -5,7 +5,7 @@
     display: flex;
     /* justify-content: center; */
     /* align-items: center; */
-    flex-direction: row;
+    /* flex-direction: row; */
     /* margin-top: 100px; */
     
 }
@@ -20,39 +20,49 @@
 
 }
 
-.ProblemleftMainDiv{
+.ProblemMainDiv{
+    width: 90%;
+    min-height: 600px;
+    height: auto;
+    margin: auto;
     /* border: 1px solid white; */
-    width: 80%;
-    margin-left: 10%;
-    font-family: Mulish;
-}
-.problemheadingsec
-{
-    margin-top: 100px;
-    /* border: 1px solid gold; */
+    border-radius: 25px;
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+    justify-content:space-evenly ;
+    align-items: center;
+    margin-top: 90px;
 }
 .problemheadfilter{
     /* border: 1px solid gold; */
+    width: 100%;
+    height: 40px;
     display: flex;
-    flex-direction: row;
     justify-content: space-between;
+    display: grid;
+    grid-template-columns: 2fr 1fr;
 }
 .searchprob{
     /* border: 1px solid white; */
+    min-width: 200px;
+    max-width: 400px;
+    height: 100%;
     font-size: 20px;
     display: flex;
     align-items: center;
     border-radius: 5px;
 }
 .searchprob input{
-    font-size: 20px;
+    font-size: 18px;
+    width: 100%;
+    height: 100%;
     background: none;
     outline: none;
     border: none;
     /* color: white; */
-    font-family: Poppins;
+    /* font-family: Poppins; */
     margin-left: 5px;
-    width: 400px;
 }
 .searchprob svg{
     font-size: 25px;
@@ -62,20 +72,16 @@
 .selectdifficulty{
     /* border : 1px solid gold; */
     display: flex;
+    justify-content: space-around;
     text-align: center;
     align-items: center;
-    column-gap: 60px;
 }
 
-.diffsec{
+.diffsec,.statussec{
     position: relative;
     padding: 5px;
-    padding-left: 10px;
-    padding-right: 10px;
-    font-size: 20px;
-    font-family: Mulish;
-    /* color: white; */
-    /* border: 1px solid white; */
+    font-size: 18px;
+    padding: 5px 10px;
     border-radius: 5px;
     cursor: pointer;
 }
@@ -85,23 +91,18 @@
     flex-direction: column;
     /* justify-content: start; */
     text-align: start;
-    top: 120%;
-    width: 135px;
+    top: 110%;
+    min-width: 100%;
+    width: auto;
+    border-radius: 10px;
     left: 0%;
 }
-.statussec{
-    padding: 5px;
-    padding-left: 10px;
-    padding-right: 10px;
-    font-size: 20px;
-    font-family: Mulish;
-    /* color: white; */
+.diff-menu label{
+    width: var(100% - 20px);
     border-radius: 5px;
+    padding: 5px 10px;
+    font-size: 17px;
     cursor: pointer;
-    position: relative;
-}
-.selectdifficulty svg{
-    margin-left: 10px;
 }
 
 /* .ProblemrightMainDiv{
@@ -172,14 +173,83 @@
     text-indent: 10px;
     border-radius: 5px;
     /* margin: 10px; */
-    color:cyan;
+    /* color:cyan; */
     display: grid;
-    grid-template-columns: 25% 40% 20% 15%;
+    grid-template-columns: 3fr 3fr 1fr 1fr;
     grid-template-rows: 100%;
+}
+
+.ProbHead{
+    overflow: hidden;
+    width: 100%;
+    height: 100%;
+    display: grid;
+    align-items: center;
 }
 
 .ProblemSetDiv{
     width: 100%;
     height: auto;
     min-height: 500px;
+    display: flex;
+    flex-direction: column;
+}
+
+.topicsonProblemsHoldDiv{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px 10px;
+    align-items: center;
+}
+
+.topicsonProblemsHoldDiv .topicsonProblems{
+    width: auto;
+    height:25px;
+    border-radius: 10px;
+    display: grid;
+    place-items: center;
+    padding-right: 10px;
+    font-size: 15px;
+}
+
+.ProblemNameSpanOnPSD:hover{
+    color:rgb(36, 36, 234);
+    cursor: pointer;
+}
+
+.PageNavigatorMain{
+    width: auto;
+    margin: auto;
+    margin-top: 50px;
+    height: auto;
+}
+
+.PageNavigatorMain ul{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    padding: 0;
+    margin: 0;
+    margin-bottom: 10px;
+}
+
+.PageNavigatorMain ul li{
+    list-style-type: none;
+    cursor: pointer;
+    border-radius: 2px;
+    display: grid;
+    place-items: center;
+    width: 30px;
+    height: 30px;
+}
+
+.PageNavigatorMain ul li.PageDisable{
+    opacity: 0.5;
+    cursor:unset;
+}
+.PageNavigatorMain ul li.PageActive{
+    color: gold;
 }

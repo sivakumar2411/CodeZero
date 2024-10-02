@@ -12,6 +12,7 @@ import Sign from './Components/Sign';
 import Profile from './Components/Profile';
 import Contribute from './Components/Contribute';
 import Admin from './Components/Admin';
+import ProblemSolving from './Components/ProblemSolving';
 
 function App() {
 
@@ -20,10 +21,11 @@ function App() {
   return (
     <>
     <ToasterFunc/>
-    {/* <Routes>
+    <Routes>
       <Route path='/' element={<Home/>}/>
       <Route path='/Home' element={<Home/>}/>
       <Route path='/Problems' element={<Problems/>}/>
+      <Route path='/Problem/:probid' element={<ProblemSolving/>}/>
       <Route path='/Friends' element={<Friends/>}/>
       <Route path='/IDE' element={<OpenIDE/>}/>
       <Route path='/Sign' element={<Sign/>}/>
@@ -34,8 +36,7 @@ function App() {
       <Route path='/Admin' element={<Admin/>}/></>:null}
       </>:null}
       <Route path='/*' element={<PageNotFound/>}/>
-    </Routes> */}
-    <Profile/>
+    </Routes>
     </>
   );
 }

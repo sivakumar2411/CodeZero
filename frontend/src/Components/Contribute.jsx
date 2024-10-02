@@ -36,7 +36,7 @@ const Contribute = () => {
     const [Topics,setTopics] = useState([]);
     const [TestCase,setTestCase] = useState({problemId:"",input:"",output:""});
     const [AllTestCase,setAllTestCase] = useState([]);
-    const [Problem,setProb] = useState({title:"",description:"",sampletestcases:[],ogs:{language:"",solution:""},topics:[]});
+    const [Problem,setProb] = useState({title:"",description:"",sampletestcases:[],ogs:{language:"",solution:""},topics:[],codesnips:CLChoice.map(({Lang})=>{ if(Lang !== "javascript")return {lang:Lang,packsnips:"#",hiddensnips:"#",visisnips:"#"}})});
     const [Quest,setQuest] = useState({id:"",title:""});
 
 
@@ -45,10 +45,10 @@ const Contribute = () => {
         setProb({...Problem,ogs:{...Problem.ogs,language:lang.Lang}});
     }
 
-    // useEffect(()=>{
-    //   console.log(Topics);
+    useEffect(()=>{
+      console.log(Problem);
       
-    // },[Topics]);
+    },[Topics]);
 
     useEffect(()=>{
       const fetchTopics = async() =>{

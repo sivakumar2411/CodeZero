@@ -1,0 +1,214 @@
+.ProblemSolvingBG{
+    width: 100%;
+    height: 100vh;
+    min-height: 600px;
+    min-width: 680px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.NavOnProbSolv{
+    min-width: 680px;
+    width: 100%;
+    height: 7vh;
+    position: fixed;
+    top: 0;
+    z-index: 10;
+}
+
+.ProbSolMainDiv{
+    width: 95%;
+    height: 90%;
+    display: grid;
+    margin-top: 7vh;
+    gap: 20px;
+    grid-template-columns: 49% 49%;
+    /* column-gap: 2%;*/
+    grid-template-rows: repeat(5,1fr);
+
+    grid-template-areas:
+    'area1 area2'
+    'area1 area2'
+    'area1 area2'
+    'area1 area3'
+    'area1 area4';
+}
+
+.ProblemDescDiv{
+    width: 100%;
+    height: 100%;
+    grid-area: area1;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.ProblemSolvIDEDiv{
+    width: 100%;
+    height: 100%;
+    grid-area: area2;
+    /* grid-row: 1 / 5; */
+    border-radius: 10px;
+    overflow: hidden;
+    transition: all 0.5s ease;
+}
+
+.ProblemIODiv{
+    width: 100%;
+    height: 100%;
+    grid-area: area4;
+    /* grid-row: 5 / 6; */
+    border-radius: 10px;
+    overflow: hidden;
+    /* border: 1px groove; */
+    transition: all 0.5s ease;
+}
+
+.HeadingOnProbDesc{
+    width: 100%;
+    height: 35px;
+    display: flex;
+    align-items: center;
+    column-gap: 10px;
+    padding-left: 20px;
+}
+
+.HeadingOnProbDesc div{
+    width: auto;
+    height: 90%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0px 10px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.HeadingOnProbIO{
+    width: 100%;
+    height: 35px;
+    display: grid;
+    grid-template-columns:2fr 1fr;
+    column-gap: 20px;
+    position: relative;
+}
+
+.HeadOnPIO1, .HeadOnPIO2,.IDEHDiv2,.IDEHDiv1{
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    column-gap: 20px;
+    padding-left: 20px;
+}
+
+.HeadOnPIO1 div, .HeadOnPIO2 div,.IDEHDiv2 div,.IDEHDiv1 div{
+    width: auto;
+    height: 90%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0px 10px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+/* .HeadOnPIO2::before{
+    content: "";
+    display: block;
+    height: 12px;
+    left: -1px;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 1px;
+} */
+
+.ContentOnProbDesc{
+    width: 100%;
+    height: calc(100% - 35px);
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding-left: 20px;
+}
+
+.ProbTitleOnProbDesc{
+    width: 100%;
+    height: auto;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    font-size: 23px;
+    font-weight:600;
+}
+
+.HeadingOnProbIDE{
+    width: 100%;
+    height: 35px;
+    display: grid;
+    grid-template-columns: 1fr 2fr 1fr;
+    align-items: center;
+}
+
+.ProblemIOContentDiv{
+    width: 100%;
+    height: calc(100% - 35px);
+    /* display: flex;
+    flex-direction: column;
+    column-gap: 20px;
+    row-gap: 20px; */
+    overflow-y: auto;
+    padding: 20px 20px;
+}
+
+.ProblemTCSN{
+    width: 95%;
+    height: auto;
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    align-items: center;
+    padding-bottom: 20px;
+}
+
+.CasesOnPTCSN,.PlusOnPTCSN{
+    width: auto;
+    height: auto;
+    position: relative;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.XOnProblemTCSN{
+    position: absolute;
+    bottom: 70%;
+    left: 80%;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    font-size: 10px;
+    cursor: pointer;
+    display: grid;
+    place-items: center;
+    visibility: hidden;
+}
+
+.CasesOnPTCSN:hover .XOnProblemTCSN{
+    visibility: visible;
+}
+
+.InputOnPIOCD,.OutputOnPIOCD{
+    /* width:fit-content; */
+    /* height: auto; */
+    display: block;
+    min-height: 30px;
+    width: 90%;
+    font-size: 18px;
+    max-height: 500px;
+    overflow-y: auto;
+    padding: 5px 10px;
+    border-radius: 5px;
+    margin-top: 10px;
+    margin-bottom: 30px;
+}

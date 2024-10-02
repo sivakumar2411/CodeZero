@@ -1,99 +1,93 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { ThemeContext } from './GlobeData'
+import { ThemeContext, UserContext } from './GlobeData'
 import Navbar from './Navbar';
 import '../Assets/Css/Problems.css'
 import { IoSearch } from "react-icons/io5";
 import { FaAngleDown, FaChevronDown } from "react-icons/fa6";
 import { AiFillThunderbolt } from "react-icons/ai";
-import { SiTicktick } from "react-icons/si";
+// import { SiTicktick } from "react-icons/si";
+import TaskAltIcon from '@mui/icons-material/TaskAlt';
 import { FaChevronUp } from "react-icons/fa";
 import { Topic } from '@mui/icons-material';
-import { GetProbsWithPageAndSort } from '../API/ProblemApi';
+import { getAllTopics, GetProbsWithPageAndSort } from '../API/ProblemApi';
+import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
+import ProblemList from './ProblemList';
 
 const Problems = () => {
 
-    const [diff,setdiff] = useState('Difficulty');
 
     const {Theme,setTOV,setUOV} = useContext(ThemeContext);
+    const {User,LoggedIn} = useContext(UserContext);
+    const navi = useNavigate();
+
     // const [status,Setstatus] = useState(false);
     // const [diff,Setdiff] = useState(false);
-    const [show,Setshow] = useState(null);
-    const [problems,setProbs] = useState({});
+    const [show,setshow] = useState(null);
+    const [Topics,setTopics] = useState([]);
+    const [page,setPage] = useState({page:1,ppp:30})
+    const [top,setTOP] = useState(0);
+    const [Filters,setFilters] = useState({diff:"",status:"",search:""});
 
-    const HandleMenuSection = (st) =>{
-        Setshow(st);
-    }
-
-    const TopicsArray = [
-        { id: 1, name: 'Arrays' },
-        { id: 2, name: 'Strings' },
-        { id: 3, name: 'Linked Lists' },
-        { id: 4, name: 'Stacks' },
-        { id: 5, name: 'Queues' },
-        { id: 6, name: 'Hash Tables' },
-        { id: 7, name: 'Trees' },
-        { id: 8, name: 'Graphs' },
-        { id: 9, name: 'Dynamic Programming' },
-        { id: 10, name: 'Backtracking' },
-        { id: 11, name: 'Greedy Algorithms' },
-        { id: 12, name: 'Sorting and Searching' },
-        { id: 13, name: 'Recursion' },
-        { id: 14, name: 'Bit Manipulation' },
-        { id: 15, name: 'Mathematics' },
-        { id: 16, name: 'Design Patterns' },
-        { id: 17, name: 'Concurrency' }
-    ];
 
     useEffect(()=>{
-        const fetchProbs = async()=>{
-            const res = await GetProbsWithPageAndSort();
-            console.log(res);
-            
+
+        const fetchTopics = async() =>{
+            const res = await getAllTopics();
+            setTopics(res.data.topics);
         }
 
-        fetchProbs();
+        fetchTopics();
     },[])
 
+    useEffect(()=>{
+        if(Filters.diff.length > 0 && Filters.search.length > 0)
+            navi(`/Problems?difficulty=${Filters.diff}&search=${Filters.search}`);
+        else if(Filters.diff.length > 0)
+            navi(`/Problems?difficulty=${Filters.diff}`);
+        else if(Filters.search.length > 0)
+            navi(`/Problems?search=${Filters.search}`);
+        else
+            navi("/Problems");
+    },[Filters])
+
   return (
-    <div className={`ProblemsBaseDiv ${Theme.BG}`} onClick={()=>{setTOV(false);Setshow("");setUOV(false);}}>
+    <div className={`ProblemsBaseDiv ${Theme.BG}`} onClick={()=>{setTOV(false);setshow("");setUOV(false);}}>
 
         <div className="NavOnProblems">
             <Navbar/>
         </div>
-        <div className="ProblemleftMainDiv">
-              <div className="problemheadingsec">
+        <div className="ProblemMainDiv">
                     <div className="problemheadfilter">
-                    <div className={`searchprob ${Theme.MD}`}>
-                        <IoSearch /><input type="search" name="" id="" placeholder='Search' />
+                    <div className={`searchprob ${Theme.SD}`}>
+                        <IoSearch /><input type="search" value={Filters.search} onChange={(e)=>{setFilters({...Filters,search:e.target.value});}} name="" id="" placeholder='Search' />
                     </div>
                     <div className="selectdifficulty">
-                        <div className={`diffsec ${Theme.MD}`} onClick={(event)=>{event.stopPropagation();HandleMenuSection('Diff')}}>{diff} <FaChevronDown style={{transform:(show === "Diff")?"rotateZ(180deg)":"",transition:"all .3s ease"}}/>
+                        <div className={`diffsec ${Theme.SD} ${Theme.HD}`} onClick={(event)=>{event.stopPropagation();show === 'Page'?setshow(""):setshow("Page");}}>{page.ppp} / Page <FaChevronDown style={{transform:(show === "Page")?"rotateZ(180deg)":"",transition:"all .3s ease"}}/>
+                        {show === 'Page'?
+                            <div className={`diff-menu ${Theme.SD}`}>
+                                <label className={`${Theme.HD}`} onClick={()=>{setPage({...page,ppp:15});}}>15 / Page</label>
+                                <label className={`${Theme.HD}`} onClick={()=>{setPage({...page,ppp:30});}}>30 / Page</label>
+                                <label className={`${Theme.HD}`} onClick={()=>{setPage({...page,ppp:50});}}>50 / Page</label>
+                                <label className={`${Theme.HD}`} onClick={()=>{setPage({...page,ppp:100});}}>100 / Page</label>
+                        </div>:null}
+                        </div>
+                        <div className={`diffsec ${Theme.SD} ${Theme.HD}`} onClick={(event)=>{event.stopPropagation();show === 'Diff'?setshow(""):setshow("Diff");}}>Difficulty <FaChevronDown style={{transform:(show === "Diff")?"rotateZ(180deg)":"",transition:"all .3s ease"}}/>
                         {show === 'Diff' ? (
                             <div className={`diff-menu ${Theme.SD}`}>
-                                <label onClick={()=>{setdiff('Easy')}}> Easy
-                                </label>
-                                <label onClick={()=>{setdiff('Medium')}}>Medium
-                                </label>
-                                <label onClick={()=>{setdiff('Hard')}}> Hard
-                                </label>
-                            </div>
-                        ) : null}
-                    </div>
-                        <div className={`statussec ${Theme.MD}`}  onClick={(event)=>{event.stopPropagation();HandleMenuSection('Status')}}>Status <FaChevronDown style={{transform:(show === "Status")?"rotateZ(180deg)":"",transition:"all .3s ease"}}/>
-                        {show === 'Status' ? (
-                            <div className={`diff-menu ${Theme.SD}`}>
-                                <label>
-                                    <input type="checkbox" /> Completed
-                                </label>
-                                <label>
-                                    <input type="checkbox" /> Inprogress
-                                </label>
-                                <label>
-                                    <input type="checkbox" /> Incomplete
-                                </label>
+                                <label className={`${Theme.HD}`} onClick={()=>{setFilters({...Filters,diff:"Easy"});}}>Easy</label>
+                                <label className={`${Theme.HD}`} onClick={()=>{setFilters({...Filters,diff:"Medium"});}}>Medium</label>
+                                <label className={`${Theme.HD}`} onClick={()=>{setFilters({...Filters,diff:"Hard"});}}>Hard</label>
                             </div>
                         ) : null}
                         </div>
+                        <div className={`statussec ${Theme.SD} ${Theme.HD}`}  onClick={(event)=>{event.stopPropagation();show === 'Status'?setshow(""):setshow('Status');}}>Status <FaChevronDown style={{transform:(show === "Status")?"rotateZ(180deg)":"",transition:"all .3s ease"}}/>
+                        {show === 'Status' ? (
+                            <div className={`diff-menu ${Theme.SD}`}>
+                                <label className={`${Theme.HD}`}>Completed</label>
+                                <label className={`${Theme.HD}`}>Inprogress</label>
+                                <label className={`${Theme.HD}`}>Incomplete</label>
+                            </div>
+                        ) : null}
                         </div>
                         
                 </div>
@@ -103,8 +97,8 @@ const Problems = () => {
                         <div className={`probtopics ${Theme.MD}`}>
                             <h3>Topics</h3>
                             <div id="topicsdivtotalDiv">
-                                {TopicsArray.map((Topic,index) =>(
-                                    <div key={index} className={`topicsarrdiv ${Theme.SD}`}>{Topic.name}</div>
+                                {Topics.map((Topic,index) =>(
+                                    <div key={index} className={`topicsarrdiv ${Theme.SD} ${Theme.HD}`}>{Topic.name}</div>
                                 ))}
                             </div>
                         </div>
@@ -116,18 +110,9 @@ const Problems = () => {
                                 <div>Difficulty</div>
                                 <div>Status</div>
                             </div>
-                            <div className={`ProblemSetDiv  ${Theme.MD}`}>
-                                <div className={`probheadlist  ${Theme.MD}`}>
-                                    <div>Title</div>
-                                    <div>Topics</div>
-                                    <div>Difficulty</div>
-                                    <div><SiTicktick /></div>
-                                </div>
-                            </div>
+                            <ProblemList props={{page,setPage,top,setTOP}}/>
                     </div>
                 </div>
-        </div>
-        <div className="ProblemrightMainDiv">
         </div>
     </div>
   )
