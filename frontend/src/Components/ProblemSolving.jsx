@@ -18,6 +18,9 @@ import DescriptionOutlinedIcon from '@mui/icons-material/DescriptionOutlined';
 import EmojiObjectsOutlinedIcon from '@mui/icons-material/EmojiObjectsOutlined';
 import TurnedInNotOutlinedIcon from '@mui/icons-material/TurnedInNotOutlined';
 import CodeIcon from '@mui/icons-material/Code';
+import TaskAltIcon from '@mui/icons-material/TaskAlt';
+import { DartThrow } from '../Assets/Datas';
+
 
 
 
@@ -130,7 +133,7 @@ const ProblemSolving = () => {
                     <div className={`${Theme.HD}`}><TurnedInNotOutlinedIcon sx={{color:purple.A400}}/> Submissions</div>
                 </div>
                 <div className="ContentOnProbDesc">
-                    <div className="ProbTitleOnProbDesc">{problem.problemNo}. {problem.title}</div>
+                    <div className="ProbTitleOnProbDesc">{problem.problemNo}. {problem.title} {User?.SlovedProbs?.includes(problem._id)?<TaskAltIcon sx={{color:green.A400,marginTop:"5px"}}/>:User?.NotSolved?.icludes()?<DartThrow/>:""}</div>
                     <div dangerouslySetInnerHTML={{__html:problem.description}}/>
                 </div>
             </div>
@@ -167,10 +170,11 @@ const ProblemSolving = () => {
                         <div className='ErrorAtRTC'>
                             {Error}
                         </div>
-                    </>:<><div className='ProblemTCSN'>
-                        {(tcopt)?<div>TestCases Passed {sampleTC.filter(({isPass})=>isPass).length} / {sampleTC.length}</div>:null}
+                    </>:<>
+                        {(tcopt)?<div className='PassedTestCase'>TestCases Passed {sampleTC.filter(({isPass})=>isPass).length} / {sampleTC.length}</div>:null}
+                        <div className='ProblemTCSN'>
                         {sampleTC.map((tc,index)=>(
-                            <div key={index} onClick={()=>{if(!tcopt)setTCI({...tcindex,tcind:index});else setTCI({...tcindex,tcres:index});}} className={`CasesOnPTCSN ${Theme.HD} ${((index === tcindex.tcind && !tcopt) || (index === tcindex.tcres && tcopt))?Theme.SD:""}`} style={{border:tcopt?sampleTC[index].isPass?".1px groove green":".1px groove red":""}}>Case {index + 1}
+                            <div key={index} onClick={()=>{if(!tcopt)setTCI({...tcindex,tcind:index});else setTCI({...tcindex,tcres:index});}} className={`CasesOnPTCSN ${Theme.HD} ${((index === tcindex.tcind && !tcopt) || (index === tcindex.tcres && tcopt))?Theme.SD:""}`} style={{color:tcopt?sampleTC[index].isPass?"green":"red":""}}>Case {index + 1}
                                 {(!tcopt && sampleTC?.length > 1)?<div className={`XOnProblemTCSN ${Theme.SD}`} onClick={(event)=>{event.stopPropagation();delteteTestCase(index)}}><CloseIcon fontSize='100'/></div>:null}
                             </div>
                         ))}

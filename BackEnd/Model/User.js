@@ -80,6 +80,14 @@ const user = new mongoose.Schema({
             }
         }
     ],
+    NotSolved:[
+        {
+            probID:{
+                type:mongoose.Schema.Types.ObjectId,
+                ref:'Problem'
+            }
+        }
+    ],
     SavedSolutions:[
         {
             probID:{

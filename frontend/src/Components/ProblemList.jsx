@@ -5,6 +5,8 @@ import TaskAltIcon from '@mui/icons-material/TaskAlt';
 import { GetProbsWithPageAndSort } from '../API/ProblemApi';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
+import { DartThrow } from '../Assets/Datas';
+
 
 
 const ProblemList = ({props}) => {
@@ -47,7 +49,7 @@ const ProblemList = ({props}) => {
                         ))}
                 </div >
                 <div className='ProbHead' style={{color:(prob.difficulty === "Easy")?"green":(prob.difficulty === "Hard")?"red":"yellow"}}>{prob.difficulty}</div>
-                <div className='ProbHead'>{(LoggedIn)?(User.SolvedProbs?.includes(prob._id))?<TaskAltIcon/>:null:null}</div>
+                <div className='ProbHead' style={{paddingLeft:"15px"}}>{(LoggedIn)?(User.SolvedProbs?.includes(prob._id))?<TaskAltIcon/>:(User.NotSolved?.includes(prob._id))?<DartThrow/>:null:null}</div>
             </div>
         ))}
         <div className="PageNavigatorMain">
