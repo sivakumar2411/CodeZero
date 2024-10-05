@@ -19,7 +19,39 @@ const ProblemList = ({props}) => {
     const difficulty = searchParam.get('difficulty');
     const status = searchParam.get('status');
     const search = searchParam.get('search');
-    const array = Array.from({ length: top }, (_, index) => index + 1);
+    const [PaginationNos,setPageNos] = useState([]);
+        
+    useEffect(()=>{
+    const PageMoving = () =>{
+            
+        if (top > 5) {
+            let a = [1];
+            
+            if (top - 5 < page.page) {
+                a.push('...');
+                a = a.concat(Array.from({length: 5}, (_, i) => top - 4 + i));
+            } 
+            else if (page.page > 3) {
+                a.push('...');
+                a = a.concat(Array.from({length: 3}, (_, i) => page.page - 1 + i));
+                a.push('...');
+                a.push(top);
+            } 
+            else {
+                a = a.concat(Array.from({length: 4}, (_, i) => i + 2));
+                a.push('...');
+                a.push(top);
+            }
+        
+            setPageNos(a);
+        } 
+        else {
+            setPageNos(Array.from({length: top}, (_, i) => i + 1));
+        }
+    }
+
+        PageMoving();
+    },[page,top])
 
 
     const navi = useNavigate();
@@ -55,8 +87,8 @@ const ProblemList = ({props}) => {
         <div className="PageNavigatorMain">
             <ul>
                 <li className={`${Theme.SD} ${page.page === 1?"PageDisable":Theme.HD}`} onClick={()=>{if(page.page !== 1)setPage({...page,page:page.page-1})}}><ChevronLeftIcon/></li>
-                {array.map((item)=>(
-                    <li className={`${Theme.SD} ${Theme.HD} ${page.page === item?"PageActive":""}`} key={item} onClick={()=>{setPage({...page,page:item});setTOP(10)}}>{item}</li>
+                {PaginationNos?.map((item,index)=>(
+                    <li className={`${Theme.SD} ${Theme.HD} ${page.page === item?"PageActive":""}`} key={index} onClick={()=>{setPage({...page,page:item});setTOP(10)}}>{item}</li>
                 ))}
                 <li className={`${Theme.SD} ${page.page === top?"PageDisable":Theme.HD}`} onClick={()=>{if(page.page !== top)setPage({...page,page:page.page+1})}}><ChevronRightIcon/></li>
             </ul>
