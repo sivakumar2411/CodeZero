@@ -3,6 +3,8 @@ import { ThemeContext } from './GlobeData';
 import '../Assets/Css/IDE.css';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+
+
 const DesEditor = ({props}) => {
   const {Theme} = useContext(ThemeContext);
   const {val,setval} = props;
@@ -22,9 +24,9 @@ const DesEditor = ({props}) => {
             'heading', '|',
             'bold', 'italic', 'underline', 'strikethrough', 'superscript', 'subscript', '|',
             'link', 'bulletedList', 'numberedList', 'blockQuote', '|',
+            'alignment', 'outdent', 'indent', '|',
             'insertTable', 'tableColumn', 'tableRow', 'mergeTableCells', '|',
             'imageUpload', 'mediaEmbed', '|',
-            'alignment', 'outdent', 'indent', '|',
             'fontFamily', 'fontSize', 'fontColor', 'fontBackgroundColor', '|',
             'specialCharacters', 'highlight', '|',
             'code', 'codeBlock', 'sourceEditing', '|',

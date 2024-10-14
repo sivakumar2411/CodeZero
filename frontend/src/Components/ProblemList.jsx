@@ -73,7 +73,7 @@ const ProblemList = ({props}) => {
   return (
     <div className={`ProblemSetDiv`}>
         {problems.map((prob,index)=>(
-            <div key={index} className={`probheadlist  ${(index % 2 === 0)?Theme.MD:Theme.SD}`}>
+            <div key={index} className={`probheadlist  ${(index % 2 === 0)?Theme.MD:""}`}>
                 <div className='ProbHead'><span className='ProblemNameSpanOnPSD' onClick={()=>{navi(`/Problem/${prob.title}`)}}>{prob.problemNo}. {prob.title}</span></div>
                 <div className={`topicsonProblemsHoldDiv`}>
                     {prob.topics.map((topic,index)=>(

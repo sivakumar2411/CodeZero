@@ -36,7 +36,7 @@ const Contribute = () => {
     const [Topics,setTopics] = useState([]);
     const [TestCase,setTestCase] = useState({problemId:"",input:"",output:""});
     const [AllTestCase,setAllTestCase] = useState([]);
-    const [Problem,setProb] = useState({title:"",description:"",sampletestcases:[],ogs:{language:"",solution:""},topics:[],codesnips:CLChoice.map(({Lang})=>{ if(Lang !== "javascript")return {lang:Lang,packsnips:"#",hiddensnips:"#",visisnips:"#"}})});
+    const [Problem,setProb] = useState({title:"",description:"",sampletestcases:[],ogs:{language:"",solution:""},topics:[],codesnips:CLChoice.filter(({Lang})=>{ if(Lang !== "javascript")return {lang:Lang,packsnips:"#",hiddensnips:"#",visisnips:"#"};})});
     const [Quest,setQuest] = useState({id:"",title:""});
 
 
