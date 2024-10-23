@@ -21,3 +21,7 @@ export const getAllTopics = async() => await axios.get(`${Api}/Topic/GetAll`);
 export const getTestCasesById = async(id) => await axios.get(`${Api}/Testcase/GetById/${id}`);
 
 export const PostTestCases = async(data) => await axios.post(`${Api}/Testcase/Insert`,data);
+
+export const getSolutionsByProblemId = async(id) => await axios.get(`${Api}/Solution/GetById/${id}`);
+
+export const getProblemForDash = async() => await axios.get(`${Api}/Problem/GetForDash`);

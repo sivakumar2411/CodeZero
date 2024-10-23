@@ -17,7 +17,7 @@ export const postNewUser = async(req,res) =>{
         GenerateJWT(user._id,res);
 
         await user.save();
-        res.status(201).json({uname:user.uname,name:user.name,id:user._id,profilePic:user.profilePic,notifi:user.notifications,will:user.will,admin:user.admin,contc:user.ContributedTestCases || [],conp:user.ContributedProbs || [],solp:user.SolvedProbs || []});
+        res.status(201).json({uname:user.uname,name:user.name,id:user._id,profilePic:user.profilePic,notifi:user.notifications,will:user.will,admin:user.admin,contc:user.ContributedTestCases || [],conp:user.ContributedProbs || [],solp:user.SolvedProbs || [],nots:user.NotSolved || [],savedsol:user.SavedSolutions || []});
     }
     catch(error){
         res.status(500).json({message:error.message});
@@ -47,7 +47,7 @@ export const LogIn = async(req,res) =>{
         return res.status(400).json({message: "Wrong Password"});
 
     GenerateJWT(user._id,res);
-    res.json({uname:user.uname,name:user.name,id:user._id,profilePic:user.profilePic,notifi:user.notifications,will:user.will,admin:user.admin,contc:user.ContributedTestCases || [],conp:user.ContributedProbs || [],solp:user.SolvedProbs || []});}
+    res.json({uname:user.uname,name:user.name,id:user._id,profilePic:user.profilePic,notifi:user.notifications,will:user.will,admin:user.admin,contc:user.ContributedTestCases || [],conp:user.ContributedProbs || [],solp:user.SolvedProbs || [],nots:user.NotSolved || [],savedsol:user.SavedSolutions || []});}
     catch(error){
         res.status(500).json({message:error.message});
         console.log("Error at Login "+error.message);
@@ -95,11 +95,24 @@ export const getUserById = async(req,res) =>{
     try{
         const user = await User.findById(req.params.id);
         if(!user) return res.status(404).json({message:"User not found"});
-        res.status(200).json({user});
+        res.json({uname:user.uname,name:user.name,id:user._id,profilePic:user.profilePic,notifi:user.notifications,will:user.will,admin:user.admin,contc:user.ContributedTestCases || [],conp:user.ContributedProbs || [],solp:user.SolvedProbs || [],nots:user.NotSolved || [],savedsol:user.SavedSolutions || []});
     }
     catch(error){
         res.status(500).json({message:error.message});
         console.log("Error at Get User By Id "+error.message);
+    }
+}
+
+export const getUserByUname = async(req,res) =>{
+    
+    try{
+        const user = await User.findOne({uname:req.params.uname}).populate({path: 'SolvedProbs.problemID',select: 'title difficulty'});
+        if(!user) return res.status(404).json({message:"User not found"});
+        res.json({uname:user.uname,name:user.name,id:user._id,profilePic:user.profilePic,notifi:user.notifications,will:user.will,admin:user.admin,contc:user.ContributedTestCases || [],conp:user.ContributedProbs || [],solp:user.SolvedProbs || [],nots:user.NotSolved || [],savedsol:user.SavedSolutions || []});
+    }
+    catch(error){
+        res.status(500).json({message:error.message});
+        console.log("Error at Get User By UserName "+error.message);
     }
 }
 

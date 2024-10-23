@@ -1,0 +1,28 @@
+.dotsOn3DL{
+    width: 10px;
+    height: auto;
+    font-size: 18px;
+    /* border: 1px groove blue; */
+}
+
+.dot3DL-1{
+    animation: MoveUpToDownDots 1s ease .3s infinite;
+}
+.dot3DL-2{
+    animation: MoveUpToDownDots 1s ease .6s infinite;
+}
+.dot3DL-3{
+    animation: MoveUpToDownDots 1s ease .9s infinite;
+}
+
+@keyframes MoveUpToDownDots{
+    0%{
+        transform: translateY(0);
+    }
+    50%{
+        transform: translateY(5px);
+    }
+    100%{
+        transform: translateY(0);
+    }
+}

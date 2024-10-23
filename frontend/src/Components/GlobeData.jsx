@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import CryptoJS from 'crypto-js';
 import { Secret_Key } from '../Assets/Datas';
+import { getUserById, LoginUser } from '../API/UserApi';
 
 export const ThemeContext = React.createContext();
 export const UserContext = React.createContext();
@@ -47,9 +48,16 @@ const GlobeData = ({children}) => {
 
   },[])
 
+  const ReloadUser = async() =>{
+    const res = await getUserById(User.id);
+    setUser(res.data);
+    const encryptUser = CryptoJS.AES.encrypt(JSON.stringify(res.data),Secret_Key).toString();
+    localStorage.setItem("CZUser",encryptUser);
+  }
+  
   const UserContextData =useMemo(()=>{
     return {
-    LoggedIn,setLI,User,
+    LoggedIn,setLI,User,ReloadUser,
     LogIn:(data)=>{setLI(true);setUser(data);
       const encryptUser = CryptoJS.AES.encrypt(JSON.stringify(data),Secret_Key).toString();
       localStorage.setItem("CZUser",encryptUser);
@@ -60,6 +68,7 @@ const GlobeData = ({children}) => {
     localStorage.removeItem("CZLoggedIn");
   }
   }},[LoggedIn,User])
+
 
   // useEffect(()=>{
   //   const LogEff =()=>{

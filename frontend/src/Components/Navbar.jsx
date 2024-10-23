@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { ThemeContext, UserContext } from './GlobeData'
 import '../Assets/Css/Navbar.css'
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 // import { GiBrainstorm } from "react-icons/gi";
 import { PiBrain } from "react-icons/pi";
@@ -13,6 +13,7 @@ const Navbar = () => {
 
   const {Theme,setTheme,ThemeOptVisi,setTOV,UserOptVisi,setUOV} = useContext(ThemeContext);
   const {LoggedIn,User,LogOut} = useContext(UserContext);
+  const {probid} = useParams();
   const [curPage,setCP] = useState("");
   const navi = useNavigate();
 
@@ -38,18 +39,20 @@ const Navbar = () => {
 
   },[])
 
+
   return (
     <div className={`NavBarMainDiv ${Theme.MD}`} onClick={(event)=>{setTOV(false);setUOV(false);}}>
-        <div className="LogoOnNav" onClick={()=>{navi("/Home")}}>CZ</div>
+        <div className="LogoOnNav" onClick={()=>{navi("/Home")}}>CodeZero</div>
         <div className="LeftNavDiv">
-          <div className={"NavItems NItem-1 "+((curPage === "H")?"ActivePage":"")} onClick={()=>{navi("/Home")}}>Home</div>
+          {!probid || probid?.length===0?<><div className={"NavItems NItem-1 "+((curPage === "H")?"ActivePage":"")} onClick={()=>{navi("/Home")}}>Home</div>
           <div className={"NavItems NItem-2 "+((curPage === "P")?"ActivePage":"")} onClick={()=>{navi("/Problems")}}>Problems</div>
           <div className={"NavItems NItem-3 "+((curPage === "I")?"ActivePage":"")} onClick={()=>{navi("/IDE")}}>IDE</div>
-          <div className={"NavItems NItem-4 "+((curPage === "F")?"ActivePage":"")} onClick={()=>{navi("/Friends")}}>Friends</div>
+          <div className={"NavItems NItem-4 "+((curPage === "F")?"ActivePage":"")} onClick={()=>{navi("/Friends")}}>Friends</div></>:null}
         </div>
+        {/* <div className="LogoOnNav" onClick={()=>{navi("/Home")}}>CodeZero</div> */}
         <div className="RightNavDiv">
-          {(LoggedIn)?<><div className={`NavItems NItem-1 ${Theme.HD}`}><NotificationsIcon /></div>
-          <div className={`NavItems NItem-2 ${Theme.HD}`}><PiBrain size={20}/></div>
+          {(LoggedIn)?<><div className={`NavItems NItem-1 ${Theme.HD}`}><NotificationsIcon style={{fontSize:"20px"}} /></div>
+          <div className={`NavItems NItem-2 ${Theme.HD}`}><PiBrain style={{fontSize:"20px"}}/></div>
           <div className="NavItems NItem-3"><img style={{width:"100%",height:"100%",borderRadius:"50%"}} onClick={(event)=>{event.stopPropagation();setUOV(true);setTOV(false)}} title={User.uname} src={User?User.profilePic?User.profilePic:Boy:Boy} alt={Boy}/>
             {(UserOptVisi)?<div className={`UserOptionsOnNav ${Theme.SD}`} onClick={(event)=>{event.stopPropagation();}}>
               <div className="TopDivOnUOON">
@@ -69,7 +72,7 @@ const Navbar = () => {
             </div>:null}
           </div></>:
           <div div className={`NavItems NItem-1 ${Theme.HD}`} id='LogInOnNavBar' onClick={(event)=>{event.preventDefault();navi("/Sign")}}>LogIn</div>}
-          <div className={`NavItems NItem-4 ${Theme.HD}`} onClick={(event)=>{event.stopPropagation();setTOV(true);setUOV(false)}}>{Theme.BG.includes("Dark")?<NightsStayIcon/>:<LightModeIcon/>}
+          <div className={`NavItems NItem-4 ${Theme.HD}`} onClick={(event)=>{event.stopPropagation();setTOV(true);setUOV(false)}}>{Theme.BG.includes("Dark")?<NightsStayIcon style={{fontSize:"20px"}}/>:<LightModeIcon style={{fontSize:"20px"}}/>}
               {(ThemeOptVisi)?
               <div className={`ThemeSelector ${Theme.SD}`} style={{visibility:ThemeOptVisi}} >
               {(DarkTheme).map((the,index)=>(

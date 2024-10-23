@@ -103,7 +103,7 @@
     padding-left: 20px;
 }
 
-.HeadOnPIO1 div, .HeadOnPIO2 div,.IDEHDiv2 div,.IDEHDiv1 div{
+.HeadOnPIO1 div, .HeadOnPIO2 .HeadOnPIO2div,.IDEHDiv2 div,.IDEHDiv1 div{
     width: auto;
     height: 90%;
     display: flex;
@@ -136,6 +136,7 @@
 .ProbTitleOnProbDesc{
     width: 100%;
     height: auto;
+    position: relative;
     padding-top: 10px;
     padding-bottom: 10px;
     font-size: 23px;
@@ -143,6 +144,84 @@
     display: flex;
     column-gap: 10px;
     align-items: center;
+}
+
+.DifficultyOfProbOnPS{
+    position: absolute;
+    right: 40px;
+    font-size: 17px;
+}
+
+.TopicsAndDiff{
+    width: 90%;
+    height: 25px;
+    /* border: 1px groove blue; */
+    display: flex;
+    column-gap: 10px;
+}
+
+.TopicsAndDiff div{
+    width: auto;
+    height: 100%;
+    padding: 0px 10px;
+    font-size: 12px;
+    display: grid;
+    place-items: center;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.SubHeadingContainer{
+    margin-top: 10px;
+    margin-bottom: 10px;
+    font-size: 14px;
+    width: 90%;
+}
+.SubHeadingContainer,.SubsOnPSPD{
+    height: auto;
+    min-height: 30px;
+    display: grid;
+    grid-template-columns: 1.5fr 1fr 1fr 1fr;
+    row-gap: 10px;
+    align-items: center;
+    padding: 0px 10px;
+}
+.SubsHolderOnPSPD{
+    width: 90%;
+    height: auto;
+}
+.SubsOnPSPD{
+    width: 100%;
+    font-size: 16px;
+    margin-bottom: 5px;
+}
+
+
+.SubmissionDtsOnPSPD{
+    width: 95%;
+    min-height: 500px;
+    height: auto;
+    max-height: 1500px;
+    border-radius: 10px;
+    padding:10px 3%;
+    margin:10px 0 ;
+    border: 1px groove;
+}
+
+.StatusHeadOnPSPD{
+    height: 50px;
+    position: relative;
+}
+
+.WriteOnEditor{
+    position: absolute;
+    top: 0;
+    right: 1%;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: grid;
+    place-items: center;
 }
 
 .HeadingOnProbIDE{

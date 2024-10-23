@@ -4,6 +4,7 @@ import TextInput from './TextInput';
 import { LoginUser } from '../API/UserApi';
 import { UserContext } from './GlobeData';
 import { useNavigate } from 'react-router-dom';
+import toast from 'react-hot-toast';
 
 const SignIn = ({props}) => {
 
@@ -15,9 +16,15 @@ const SignIn = ({props}) => {
 
   const SISubmit = async(event) => {
     event.preventDefault();
-    const res =await LoginUser(udata);
-    await LogIn(res.data);
-    navi("/");
+    try{
+      const res =await LoginUser(udata);
+      await LogIn(res.data);
+      navi("/");
+    }
+    catch(err){
+      if(err.response.status === 400)
+        toast.error(err.response.data.message);
+    }
   }
   return (
     <div className="SignINUPMainDiv">

@@ -6,6 +6,7 @@ import { GetProbsWithPageAndSort } from '../API/ProblemApi';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import { DartThrow } from '../Assets/Datas';
+import { green, red, yellow } from '@mui/material/colors';
 
 
 
@@ -80,8 +81,10 @@ const ProblemList = ({props}) => {
                         <div className={`topicsonProblems ${Theme.SD}`} key={index}>{topic.name}</div>
                         ))}
                 </div >
-                <div className='ProbHead' style={{color:(prob.difficulty === "Easy")?"green":(prob.difficulty === "Hard")?"red":"yellow"}}>{prob.difficulty}</div>
-                <div className='ProbHead' style={{paddingLeft:"15px"}}>{(LoggedIn)?(User.SolvedProbs?.includes(prob._id))?<TaskAltIcon/>:(User.NotSolved?.includes(prob._id))?<DartThrow/>:null:null}</div>
+                <div className='ProbHead' style={{color:(prob.difficulty === "Easy")?green.A400:(prob.difficulty === "Hard")?red.A700:yellow.A400}}>{prob.difficulty}</div>
+                <div className='ProbHead' style={{paddingLeft:"15px"}}>
+                {LoggedIn && (User.solp?.some(({ problemID }) => problemID === prob._id) ? (<TaskAltIcon sx={{color:green.A400}} />):
+                    User.nots?.some(({ problemID }) => problemID === prob._id) ? (<DartThrow />) : null)}</div>
             </div>
         ))}
         <div className="PageNavigatorMain">

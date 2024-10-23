@@ -1,4 +1,9 @@
 import axios from 'axios';
+import { Testcase } from '../Model/TestCase.js';
+import { Problem } from '../Model/Problem.js';
+import mongoose from 'mongoose';
+import { User } from '../Model/User.js';
+import { Solution } from '../Model/Solution.js';
 // import {exec} from 'child_process';
 // import fs from 'fs';
 // import { stdin } from 'process';
@@ -137,11 +142,13 @@ export const Execute =async({code,language,input}) =>{
             default:
                 return ({message: 'Unsupported Language'});
         }
+        const st = Date.now();
         const response = await axios.post("https://emkc.org/api/v2/piston/execute",Data);
         return ({
             stdout: response.data.run.stdout,
             stderr: response.data.run.stderr,
-            output: response.data.run.output
+            output: response.data.run.output,
+            extime:Date.now() - st
         });
 
     }
@@ -186,5 +193,123 @@ export const RunTestCases = async(req,res) =>{
     catch(error){
         res.status(500).json({message:error.message});
         console.log("Error at RunTestCases "+error);
+    }
+}
+
+// export const GetTestCases = async(pId) =>{
+//     try{
+//         console.log(pId);
+        
+//         return await Testcase.find({problemId:pId});
+//     }
+//     catch(error){
+//         console.log("Error at GetTestCases "+error.message);
+//     }
+// }
+
+export const SubmitTestCases = async(req,res) =>{
+    try{
+        const {code,language,pId,uId,scode} = req.body;
+        const testcases = await Testcase.find({problemId:pId});
+        const user = await User.findById(uId);
+        let exTime = 0;
+        
+
+        for(let i=0;i<testcases.length;i++)
+        {
+            const {input} = testcases[i];
+            const result = await Execute({code,language,input});
+
+            console.log(result);
+            
+            if(result.stderr.length > 0)
+            {
+                const sol = new Solution({
+                    problemId:pId,
+                    code: scode,
+                    language: language,
+                    userId:uId,
+                    Error: result.stderr,
+                    passed:i,
+                    status:"Error"
+                });
+                if(!user.NotSolved && !(user.SolvedProbs.some(({ problemID }) => problemID === pId)))
+                {
+                    user.NotSolved = [{ problemID: pId }];
+                    await user.save();
+                }
+                else if (!user.NotSolved && !user.SolvedProbs && !(user.NotSolved.some(({ problemID }) => problemID === pId)) && !(user.SolvedProbs.some(({ problemID }) => problemID === pId)))
+                {
+                    user.NotSolved.push({ problemID: pId });
+                    await user.save();
+                }
+                await sol.save();
+                return res.status(404).json({message:"Error saving solution"});
+            }
+            let Op = result.stdout.split("STDOUT");
+
+            const sresult = {
+                input: testcases[i].input,
+                expected: testcases[i].output,
+                output: Op.length > 1? Op[1]:Op[0],
+                stdo:Op.length > 1 ? Op[0]:""
+            };
+            exTime += result.extime;
+            if(exTime !== result.extime)
+                exTime /= 2;
+            if(testcases[i].output !== sresult.output)
+            {
+                if(!user.NotSolved && !(user.SolvedProbs.some(({ problemID }) => problemID === pId)))
+                {
+                    user.NotSolved = [{ problemID: pId }];
+                    await user.save();
+                }
+                else if (!user.NotSolved && !user.SolvedProbs && !(user.NotSolved.some(({ problemID }) => problemID === pId)) && !(user.SolvedProbs.some(({ problemID }) => problemID === pId)))
+                {
+                    user.NotSolved.push({ problemID: pId });
+                    await user.save();
+                }
+                const sol = new Solution({
+                    problemId:pId,
+                    code: scode,
+                    language: language,
+                    userId:uId,
+                    input: sresult.input,
+                    output: sresult.output,
+                    expected: sresult.expected,
+                    stdo: sresult.stdo,
+                    total:testcases.length,
+                    passed:i
+                });
+                await sol.save();
+                return res.status(400).json({sresult,ttc:testcases.length,passed:i});
+            }
+        }
+        if (user.NotSolved?.some(({ problemID }) => problemID === pId))
+        user.NotSolved = user.NotSolved.filter(({ problemID }) => problemID !== pId);
+        if (!user.SolvedProbs)
+        {
+            user.SolvedProbs = [{ problemID: pId }];
+            await user.save();
+        }
+        else if (!user.SolvedProbs.some(({ problemID }) => problemID === pId))
+        {
+            user.SolvedProbs.push({ problemID: pId });
+            await user.save();
+        }
+        const sol = new Solution({
+            problemId:pId,
+            code: scode,
+            language: language,
+            userId:uId,
+            status:"Solved",
+            executionTime:exTime - 4000
+        });
+        await sol.save();
+        return res.status(200).json({ttc:testcases.length});
+    }
+    catch(error){
+        res.status(500).json({message:error.message});
+        console.log("Error at SumbmitTestCases "+error);
     }
 }

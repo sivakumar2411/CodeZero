@@ -74,7 +74,7 @@ const user = new mongoose.Schema({
     ],
     SolvedProbs:[
         {
-            probID:{
+            problemID:{
                 type:mongoose.Schema.Types.ObjectId,
                 ref:'Problem'
             }
@@ -82,7 +82,7 @@ const user = new mongoose.Schema({
     ],
     NotSolved:[
         {
-            probID:{
+            problemID:{
                 type:mongoose.Schema.Types.ObjectId,
                 ref:'Problem'
             }
@@ -90,7 +90,7 @@ const user = new mongoose.Schema({
     ],
     SavedSolutions:[
         {
-            probID:{
+            problemID:{
                 type:mongoose.Schema.Types.ObjectId,
                 ref:'Propblem'
             },

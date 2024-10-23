@@ -13,6 +13,7 @@ import Profile from './Components/Profile';
 import Contribute from './Components/Contribute';
 import Admin from './Components/Admin';
 import ProblemSolving from './Components/ProblemSolving';
+import DashBoard from './Components/DashBoard';
 
 function App() {
 
@@ -35,6 +36,7 @@ function App() {
       {(User?.admin)?<>
       <Route path='/Admin' element={<Admin/>}/></>:null}
       </>:null}
+      <Route path='/User/:username' element={<DashBoard/>}/>
       <Route path='/*' element={<PageNotFound/>}/>
     </Routes>
     </>

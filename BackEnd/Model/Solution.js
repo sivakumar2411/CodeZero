@@ -22,6 +22,34 @@ const sol = new mongoose.Schema({
         type:String,
         default:'Attempted'
     },
+    Error:{
+        type:String,
+        default:""
+    },
+    total:{
+        type:Number,
+        default:0
+    },
+    passed:{
+        type:Number,
+        default:0
+    },
+    input:{
+        type:String,
+        default:""
+    },
+    stdout:{
+        type:String,
+        default:""
+    },
+    output:{
+        type:String,
+        default:""
+    },
+    expected:{
+        type:String,
+        default:""
+    },
     executionTime:{
         type:Number,
         default:0

@@ -89,6 +89,19 @@ export const GetAllProblems = async (req, res) => {
     }
 }
 
+export const GetAllProblemsForDash = async(req,res) =>{
+    try {
+        const problems = await Problem.find({status:"Accepted"}).populate("topics");
+        if(problems.length === 0)
+            return res.status(404).json({message:"No problems found."});
+        return res.status(200).json({problems});
+    }
+    catch(error){
+        res.status(500).json({error: error.message});
+        console.log("Error at GetAllProblemsForDash"+error.message);
+    }
+}
+
 export const GetProblemById = async (req, res) => {
     try {
         const problem = await Problem.findById(req.params.id).populate("creator").populate("topics").populate("sampletestcases");
