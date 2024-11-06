@@ -14,6 +14,7 @@ const GlobeData = ({children}) => {
     })
     const [ThemeOptVisi,setTOV] = useState(false);
     const [UserOptVisi,setUOV] = useState(false);
+    const [NVisi,setNVisi] = useState(false);
 
     useEffect(()=>{
         localStorage.setItem("CZTheme",JSON.stringify(Theme));
@@ -79,7 +80,7 @@ const GlobeData = ({children}) => {
   // },[LoggedIn])
 
   return (
-    <ThemeContext.Provider value={{Theme,setTheme,ThemeOptVisi,setTOV,UserOptVisi,setUOV}}>
+    <ThemeContext.Provider value={{Theme,setTheme,ThemeOptVisi,setTOV,UserOptVisi,setUOV,NVisi,setNVisi}}>
         <UserContext.Provider value={UserContextData}>
           {children}
         </UserContext.Provider>

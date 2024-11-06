@@ -1,21 +1,24 @@
 import React, { useContext, useEffect, useState } from 'react';
 import Navbar from './Navbar';
-import { ThemeContext } from './GlobeData';
+import { ThemeContext, UserContext } from './GlobeData';
 import '../Assets/Css/DashBoard.css';
 import { Boy } from '../Assets/Datas';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { getUserByUName } from '../API/UserApi';
 import { Doughnut } from 'react-chartjs-2';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 import { blue, green, red, yellow } from '@mui/material/colors';
 import { getProblemForDash } from '../API/ProblemApi';
+import EditIcon from '@mui/icons-material/Edit';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 const DashBoard = () => {
 
-    const {Theme} = useContext(ThemeContext);
+    const {Theme,setUOV,setTOV} = useContext(ThemeContext);
+    const {User} = useContext(UserContext);
     const {username} = useParams();
+    const navi = useNavigate();
 
     const [UData,setUData] = useState({});
     const [problems,setProblems] = useState([]);
@@ -136,7 +139,7 @@ const DashBoard = () => {
                 
                 ctx.save();
                 ctx.font = 'bold 30px Arial'; 
-                ctx.fillStyle = '#fff';  
+                ctx.fillStyle = Theme.BG.includes("Dark")?'#fff':"black";  
                 ctx.textAlign = 'center';
                 ctx.textBaseline = 'middle';
                 ctx.fillText(showChartText[1], centerX - 10, centerY - 5);
@@ -153,13 +156,13 @@ const DashBoard = () => {
 
         let da = [],bg = [];
         if(chartShow === 0)
-            bg = [blue.A400,blue[900]];
+            bg = [blue.A400,"#003366"];
         else if(chartShow === 1)
-            bg = [green.A400,green[900]];
+            bg = [green.A400,"#006600"];
         else if(chartShow === 2)
-            bg = [yellow.A400,yellow[900]];
+            bg = [yellow.A400,"#666600"];
         else if(chartShow === 3)
-            bg = [red.A400,red[900]];
+            bg = [red.A400,"#660000"];
             da = [showChartText[1],showChartText[0] - showChartText[1]];
             
         return(
@@ -182,7 +185,7 @@ const DashBoard = () => {
     }
 
   return (
-    <div className={`DashBaseDiv ${Theme.BG}`}>
+    <div className={`DashBaseDiv ${Theme.BG}`} onClick={()=>{setUOV(false);setTOV(false);}}>
         <div className="NavOnDash">
             <Navbar/>
         </div>
@@ -190,6 +193,7 @@ const DashBoard = () => {
         <div className={`DashMainDiv`}>
             <div className="HolderOfDash">
                 <div className={`ProfileDtsOnDB ${Theme.MD}`}>
+                    {User.id === UData.id?<div className={`EditOnDash ${Theme.HD}`} onClick={() => {navi('/Profile')}} ><EditIcon /></div>:null}
                     <div className="NameAndBadgesOnDB">
                         <div className="NameandUName">
                             <div className='NameONNUN'>{UData.name}</div>

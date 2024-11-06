@@ -23,3 +23,5 @@ export const getUserById = async(id) => axios.get(`${Api}/User/GetById/${id}`);
 export const getUserByUName = async(uname) => axios.get(`${Api}/User/GetByUName/${uname}`);
 
 export const getSubmisions = async(uid,pid) => axios.get(`${Api}/Solution/GetById/${uid}/${pid}`);
+
+export const UpdateNoti = async(id) => axios.get(`${Api}/User/SeenNotifi/${id}`);

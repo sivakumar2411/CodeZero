@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 const noti = new mongoose.Schema({
     msg:{
         type:String,
-        required:true
+        default:"Welcome to Our Application.Unleash Your True power.Thank you for Join with us. Happy Coding ^_^"
     },
     date:{
         type:Date,

@@ -84,6 +84,9 @@
     padding: 5px 10px;
     border-radius: 5px;
     cursor: pointer;
+    display: flex;
+    column-gap: 10px;
+    justify-content: center;
 }
 .diff-menu{
     position: absolute;
@@ -176,6 +179,7 @@
     /* color:cyan; */
     display: grid;
     grid-template-columns: 3fr 3fr 1fr 1fr;
+    column-gap: 20px;
     grid-template-rows: 100%;
 }
 
@@ -212,6 +216,13 @@
     place-items: center;
     padding-right: 10px;
     font-size: 15px;
+}
+
+.ProblemNameSpanOnPSD{
+    max-width: 100%;
+    overflow-x: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis; 
 }
 
 .ProblemNameSpanOnPSD:hover{

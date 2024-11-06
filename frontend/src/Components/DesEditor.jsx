@@ -1,6 +1,8 @@
 import React, { useContext, useState } from 'react';
 import { ThemeContext } from './GlobeData';
 import '../Assets/Css/IDE.css';
+import 'ckeditor5/ckeditor5.css';
+import 'ckeditor5-premium-features/ckeditor5-premium-features.css';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 

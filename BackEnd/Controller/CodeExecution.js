@@ -233,13 +233,11 @@ export const SubmitTestCases = async(req,res) =>{
                     passed:i,
                     status:"Error"
                 });
-                if(!user.NotSolved && !(user.SolvedProbs.some(({ problemID }) => problemID === pId)))
-                {
+                if (!user.NotSolved && !user.SolvedProbs?.some(({ problemID }) => problemID === pId)) {
                     user.NotSolved = [{ problemID: pId }];
                     await user.save();
                 }
-                else if (!user.NotSolved && !user.SolvedProbs && !(user.NotSolved.some(({ problemID }) => problemID === pId)) && !(user.SolvedProbs.some(({ problemID }) => problemID === pId)))
-                {
+                else if ( Array.isArray(user.NotSolved) && !user.NotSolved.some(({ problemID }) => problemID === pId) && !user.SolvedProbs?.some(({ problemID }) => problemID === pId) ) {
                     user.NotSolved.push({ problemID: pId });
                     await user.save();
                 }
@@ -259,13 +257,11 @@ export const SubmitTestCases = async(req,res) =>{
                 exTime /= 2;
             if(testcases[i].output !== sresult.output)
             {
-                if(!user.NotSolved && !(user.SolvedProbs.some(({ problemID }) => problemID === pId)))
-                {
+                if (!user.NotSolved && !user.SolvedProbs?.some(({ problemID }) => problemID === pId)) {
                     user.NotSolved = [{ problemID: pId }];
                     await user.save();
                 }
-                else if (!user.NotSolved && !user.SolvedProbs && !(user.NotSolved.some(({ problemID }) => problemID === pId)) && !(user.SolvedProbs.some(({ problemID }) => problemID === pId)))
-                {
+                else if ( Array.isArray(user.NotSolved) && !user.NotSolved.some(({ problemID }) => problemID === pId) && !user.SolvedProbs?.some(({ problemID }) => problemID === pId) ) {
                     user.NotSolved.push({ problemID: pId });
                     await user.save();
                 }

@@ -1,7 +1,7 @@
 import { Problem } from "../Model/Problem.js";
 import { Testcase } from "../Model/TestCase.js";
 import { Topic } from "../Model/Topic.js";
-import { User } from "../Model/User.js";
+import { User} from "../Model/User.js";
 import { UpdateTCandQues } from "./UserController.js";
 
 
@@ -135,6 +135,7 @@ export const GetProblemWithPAS = async(req,res) =>{
         const order = req.query.order === 'desc' ? -1:1;
         const difficulty = req.query.difficulty;
         const search = req.query.search;
+        const status = req.query.status;
 
         const skip = (page - 1) * ppp;
         let query = {status:"Accepted"}
@@ -143,11 +144,21 @@ export const GetProblemWithPAS = async(req,res) =>{
             query.difficulty = difficulty;
         if(search)
             query.title = { $regex: new RegExp(`${search}`, 'i') };
+        if(status!== "Status"){
+            const user = await User.findById(req.query.uid);
+            let probIds = [];
+            if(status === "Solved")
+                probIds = user?.SolvedProbs?.map((prob) =>prob.problemID);
+            else if(status === "Attempted")
+                probIds = user?.NotSolved?.map((prob) =>prob.problemID);
+            query._id = {$in :probIds}
+        }
+        // console.log(query);
+        
             
 
         const problems = await Problem.find(query).sort({[sortBy] : order}).skip(skip).limit(ppp).populate("topics").populate("sampletestcases");
 
-        // console.log(query);
         
         const allProblems = await Problem.countDocuments(query);
         const totPages = Math.ceil(allProblems/ppp);

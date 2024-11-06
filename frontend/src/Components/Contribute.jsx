@@ -10,6 +10,8 @@ import DesEditor from './DesEditor';
 import { CLChoice } from '../Assets/Datas';
 import CheckIcon from '@mui/icons-material/Check';
 import { getAllTopics, PostProblem } from '../API/ProblemApi';
+import CodeDisplay from './CodeDisplay';
+import IDEForShowCase from './IDEForShowCase';
 
 
 
@@ -36,7 +38,7 @@ const Contribute = () => {
     const [Topics,setTopics] = useState([]);
     const [TestCase,setTestCase] = useState({problemId:"",input:"",output:""});
     const [AllTestCase,setAllTestCase] = useState([]);
-    const [Problem,setProb] = useState({title:"",description:"",sampletestcases:[],ogs:{language:"",solution:""},topics:[],codesnips:CLChoice.filter(({Lang})=>{ if(Lang !== "javascript")return {lang:Lang,packsnips:"#",hiddensnips:"#",visisnips:"#"};})});
+    const [Problem,setProb] = useState({title:"",description:"",sampletestcases:[],ogs:{language:"",solution:""},topics:[],codesnips:CLChoice.filter(({Lang})=> Lang !== "javascript").map(({Lang})=>({lang:Lang,packsnips:" ",hiddensnips:" ",visisnips:" "}))});
     const [Quest,setQuest] = useState({id:"",title:""});
 
 
@@ -67,7 +69,6 @@ const Contribute = () => {
     const handleProbSubmit =async() =>{
 
       setProb({...Problem,sampletestcases:AllTestCase});
-
       PostProblem({...Problem,sampletestcases:AllTestCase,uid:User.id});
 
 
@@ -153,7 +154,8 @@ const Contribute = () => {
                 </div>
                 Solution
                 <div className={`SolutionDivOnQSF ${Theme.MD} `}>
-                  <textarea style={{resize:"none"}} placeholder='Enter Your Solution' value={Problem.ogs.solution} onChange={(event)=>{setProb({...Problem,ogs:{...Problem.ogs,solution:event.target.value}})}}/>
+                      <IDEForShowCase props={{val:Problem.ogs.solution,lang:Problem.ogs.language,setVal:(e)=>{setProb({...Problem,ogs:{...Problem.ogs,solution:e}})}}}/>
+                    {/* <textarea style={{resize:"none"}} placeholder='Enter Your Solution' value={Problem.ogs.solution} onChange={(event)=>{setProb({...Problem,ogs:{...Problem.ogs,solution:event.target.value}})}}/> */}
                 </div>
               </div>
               </>:<>

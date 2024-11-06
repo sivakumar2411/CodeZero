@@ -55,11 +55,10 @@
     place-items: center;
     cursor: pointer;
     border-radius: 50%;
+    position:relative;
+
 }
 
-.RightNavDiv .NItem-4,.RightNavDiv .NItem-3{
-    position:relative;
-}
 
 .NItem-4 .ThemeSelector{
     position:absolute;
@@ -76,6 +75,29 @@
     width: auto;
     height: auto;
     padding: 5px 7px 5px 7px;
+}
+
+.NotificationsHolder{
+    min-width: 300px;
+    max-width: 450px;
+    height: 400px;
+    position: absolute;
+    border-radius: 10px;
+    top: 105%;
+    right: 0%;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap-reverse;
+}
+
+.NotificationsHolder div{
+    width: var(100% - 40px);
+    height: auto;
+    margin: 10px;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .UserOptionsOnNav{

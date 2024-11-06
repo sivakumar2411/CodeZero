@@ -1,5 +1,5 @@
 import express from 'express';
-import { getAllUser, getUserById, getUserByUname, LogIn, LogOut, postNewUser, updateUser } from '../Controller/UserController.js';
+import { getAllUser, getUserById, getUserByUname, LogIn, LogOut, postNewUser, updateNotifications, updateUser } from '../Controller/UserController.js';
 import { GetAllAccProb, GetAllProblems, GetAllProblemsForDash, GetAllProbReqs, getAllTopics, GetProblemById, GetProblemByName, GetProblemWithPAS, getTestCasesById, InsertAllTopics, InsertNewTopic, newCases, PostNewProblem, UpdateProblem } from '../Controller/ProblemController.js';
 import { GetSolutionByIds, GetSolutionsByProblemId, PostNewSolution } from '../Controller/SolutionController.js';
 import { Execute, IDEExecution, RunTestCases, SubmitTestCases} from '../Controller/CodeExecution.js';
@@ -14,6 +14,7 @@ router.put("/User/Update",updateUser);
 router.get("/User/GetAll",getAllUser);
 router.get("/User/GetById/:id",getUserById);
 router.get("/User/GetByUName/:uname",getUserByUname);
+router.get("/User/SeenNotifi/:id",updateNotifications);
 
 //Problem Routes
 router.post("/Problem/Insert",PostNewProblem);

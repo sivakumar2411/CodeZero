@@ -7,7 +7,7 @@ import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import { DartThrow } from '../Assets/Datas';
 import { green, red, yellow } from '@mui/material/colors';
-
+import '../Assets/Css/Problems.css'
 
 
 const ProblemList = ({props}) => {
@@ -15,10 +15,9 @@ const ProblemList = ({props}) => {
     const {Theme} = useContext(ThemeContext);
     const {User,LoggedIn} = useContext(UserContext);
     const [searchParam] = useSearchParams();
-    const {page,setPage,top,setTOP} = props;
+    const {page,setPage,top,setTOP,status} = props;
 
     const difficulty = searchParam.get('difficulty');
-    const status = searchParam.get('status');
     const search = searchParam.get('search');
     const [PaginationNos,setPageNos] = useState([]);
         
@@ -62,14 +61,18 @@ const ProblemList = ({props}) => {
 
     useEffect(()=>{
         const fetchProbs = async()=>{
-            const res = await GetProbsWithPageAndSort({difficulty:difficulty,...page,search:search});
+            const res = await GetProbsWithPageAndSort({difficulty:difficulty,...page,search:search,status,uid:User.id});
             console.log(res);
             setTOP(res.data.top);
             setProbs(res.data.problems || []);
+            // console.log(status,User);
+            
         }
 
         fetchProbs();
-    },[searchParam])
+        console.log(User);
+        
+    },[searchParam,page,status])
 
   return (
     <div className={`ProblemSetDiv`}>

@@ -4,6 +4,8 @@ import TextInput from './TextInput';
 import { PostNewUser } from '../API/UserApi';
 import { UserContext } from './GlobeData';
 import { useNavigate } from 'react-router-dom';
+import toast from 'react-hot-toast';
+
 
 const SignUp = ({props}) => {
 
@@ -16,10 +18,18 @@ const SignUp = ({props}) => {
 
     const SingUpSub =async(event)=>{
         event.preventDefault();
-
-        const res =await PostNewUser(data);
-        LogIn(res.data);
-        navi("/");
+        try{
+            const res =await PostNewUser(data);
+            LogIn(res.data);
+            toast.success("Sign Up Successful!");
+            navi("/");
+        }
+        catch(err){
+            if(err.response.status === 400)
+                toast.error(err?.response?.data?.message);
+            else
+                toast.error("Something went wrong")
+        }
     }
 
   return (

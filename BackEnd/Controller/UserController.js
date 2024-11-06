@@ -1,12 +1,19 @@
 import { User } from "../Model/User.js";
 import bcrypt from "bcryptjs";
 import GenerateJWT from "../Util/GenerateToken.js";
+import { Notification } from "../Model/Notification.js";
 
 export const postNewUser = async(req,res) =>{
 
     try{
         const {uname,name,email,password} = req.body;
 
+        const EmailTaken = await User.findOne({email:email});
+        if(EmailTaken)
+            return res.status(400).json({message: "Email already Registered"});
+        const unameTaken = await User.findOne({uname:uname});
+        if(unameTaken)
+            return res.status(400).json({message: "Username already Taken"});
         
         const salt = await bcrypt.genSalt(10);
         const hashedPassword = await bcrypt.hash(password, salt);
@@ -16,8 +23,12 @@ export const postNewUser = async(req,res) =>{
         })
         GenerateJWT(user._id,res);
 
+        const newnoti = new Notification({user:user._id});
+        user.notifications.push(newnoti);
+        newnoti.save();
+
         await user.save();
-        res.status(201).json({uname:user.uname,name:user.name,id:user._id,profilePic:user.profilePic,notifi:user.notifications,will:user.will,admin:user.admin,contc:user.ContributedTestCases || [],conp:user.ContributedProbs || [],solp:user.SolvedProbs || [],nots:user.NotSolved || [],savedsol:user.SavedSolutions || []});
+        res.status(201).json({uname:user.uname,email:user.email,name:user.name,id:user._id,profilePic:user.profilePic,notifi:user.notifications,will:user.will,admin:user.admin,contc:user.ContributedTestCases || [],conp:user.ContributedProbs || [],solp:user.SolvedProbs || [],nots:user.NotSolved || [],savedsol:user.SavedSolutions || []});
     }
     catch(error){
         res.status(500).json({message:error.message});
@@ -39,7 +50,9 @@ export const LogIn = async(req,res) =>{
     try{
     const {username,password} = req.body;
     
-    const user = await User.findOne({uname:username} || {email:username});
+    const user = await User.findOne({uname:username} || {email:username}).populate("notifications");
+    console.log(user);
+    
 
     if(!user)
         return res.status(400).json({message: "User not found"});
@@ -47,7 +60,7 @@ export const LogIn = async(req,res) =>{
         return res.status(400).json({message: "Wrong Password"});
 
     GenerateJWT(user._id,res);
-    res.json({uname:user.uname,name:user.name,id:user._id,profilePic:user.profilePic,notifi:user.notifications,will:user.will,admin:user.admin,contc:user.ContributedTestCases || [],conp:user.ContributedProbs || [],solp:user.SolvedProbs || [],nots:user.NotSolved || [],savedsol:user.SavedSolutions || []});}
+    res.json({uname:user.uname,email:user.email,name:user.name,id:user._id,profilePic:user.profilePic,notifi:user.notifications,will:user.will,admin:user.admin,contc:user.ContributedTestCases || [],conp:user.ContributedProbs || [],solp:user.SolvedProbs || [],nots:user.NotSolved || [],savedsol:user.SavedSolutions || []});}
     catch(error){
         res.status(500).json({message:error.message});
         console.log("Error at Login "+error.message);
@@ -95,7 +108,7 @@ export const getUserById = async(req,res) =>{
     try{
         const user = await User.findById(req.params.id);
         if(!user) return res.status(404).json({message:"User not found"});
-        res.json({uname:user.uname,name:user.name,id:user._id,profilePic:user.profilePic,notifi:user.notifications,will:user.will,admin:user.admin,contc:user.ContributedTestCases || [],conp:user.ContributedProbs || [],solp:user.SolvedProbs || [],nots:user.NotSolved || [],savedsol:user.SavedSolutions || []});
+        res.json({uname:user.uname,email:user.email,name:user.name,id:user._id,profilePic:user.profilePic,notifi:user.notifications,will:user.will,admin:user.admin,contc:user.ContributedTestCases || [],conp:user.ContributedProbs || [],solp:user.SolvedProbs || [],nots:user.NotSolved || [],savedsol:user.SavedSolutions || []});
     }
     catch(error){
         res.status(500).json({message:error.message});
@@ -108,7 +121,7 @@ export const getUserByUname = async(req,res) =>{
     try{
         const user = await User.findOne({uname:req.params.uname}).populate({path: 'SolvedProbs.problemID',select: 'title difficulty'});
         if(!user) return res.status(404).json({message:"User not found"});
-        res.json({uname:user.uname,name:user.name,id:user._id,profilePic:user.profilePic,notifi:user.notifications,will:user.will,admin:user.admin,contc:user.ContributedTestCases || [],conp:user.ContributedProbs || [],solp:user.SolvedProbs || [],nots:user.NotSolved || [],savedsol:user.SavedSolutions || []});
+        res.json({uname:user.uname,email:user.email,name:user.name,id:user._id,profilePic:user.profilePic,notifi:user.notifications,will:user.will,admin:user.admin,contc:user.ContributedTestCases || [],conp:user.ContributedProbs || [],solp:user.SolvedProbs || [],nots:user.NotSolved || [],savedsol:user.SavedSolutions || []});
     }
     catch(error){
         res.status(500).json({message:error.message});
@@ -116,3 +129,14 @@ export const getUserByUname = async(req,res) =>{
     }
 }
 
+export const updateNotifications = async(req,res) =>{
+    try{
+        const user = await User.findById(req.params.id).populate("notifications");
+        for(const notification of user.notifications)
+            await Notification.findByIdAndUpdate(notification._id,{seen:true})
+    }
+    catch(error){
+        res.status(500).json({message:error.message});
+        console.log("Error at Update Notifications "+error.message);
+    }
+}

@@ -1,12 +1,13 @@
 import React, { useContext, useState } from 'react';
-import { ThemeContext } from './GlobeData';
+import { ThemeContext, UserContext } from './GlobeData';
 import '../Assets/Css/Profile.css';
 import Navbar from './Navbar';
 import boy from '../Assets/Images/boy.webp';
 
 const Profile = () => {
 
-    const{Theme} = useContext(ThemeContext);
+    const {Theme,setTOV,setUOV,setNVisi} = useContext(ThemeContext);
+    const {User,ReloadUser} = useContext(UserContext);
     const [curr,Setcurr] = useState('info');
     const [IsEdit, SetIsEdit] = useState(false);
     const HandleInfo = (event) => {
@@ -30,7 +31,7 @@ const Profile = () => {
         SetIsEdit(false);
     }
   return (
-    <div className={`ProfileBaseDiv ${Theme.BG}`}>
+    <div className={`ProfileBaseDiv ${Theme.BG}`} onClick={()=>{setUOV(false);setTOV(false);setNVisi(false);}}>
         
         <div className="NavOnProfile">
             <Navbar/>
@@ -38,8 +39,8 @@ const Profile = () => {
         <div className={`Profiletop ${Theme.MD}`}>
           <img src={boy} alt="" className='Profpic'/>
           <div className='ProfName'>
-            <span>Full Name</span><br />
-            <span style={{color:"grey"}}>UserName</span>
+            <span>{User?.name}</span><br />
+            <span style={{color:"grey"}}>@{User?.uname}</span>
           </div>
         </div>
         <div className="ProfileBottom">
@@ -58,23 +59,22 @@ const Profile = () => {
                 
                 <label htmlFor="">
                   Full name <br />
-                  <input type="text" name="" id="" readOnly={!IsEdit} />
+                  <input type="text" name="" id="" value={User?.name} readOnly={!IsEdit} />
                 </label>
                 <label htmlFor="">
                   Gender 
                   <select name="" id="" disabled={!IsEdit}>
-                    <option value="">Male</option>
-                    <option value="">Female</option>
-                    <option value="">Others</option>
+                    <option value="" defaultValue={User?.gender === 'Male'}>Male</option>
+                    <option value="" defaultValue={User?.gender === 'Female'}>Female</option>
                   </select>
                 </label>
-                <label htmlFor="">
+                {/* <label htmlFor="">
                   Birthday  <br />
                   <input type="date" name="" id="" readOnly={!IsEdit} />
-                </label>
+                </label> */}
                 <label htmlFor="">
                   Bio <br />
-                  <textarea style={{width:"450px",height:"120px",background:"none",color:"white"}} name="" id="" cols="30" rows="10" readOnly={!IsEdit}></textarea>
+                  <textarea style={{width:"450px",height:"120px",background:"none",color:"white"}} value={User?.bio} name="" id="" cols="30" rows="10" readOnly={!IsEdit}></textarea>
                 </label>
                 <label htmlFor="">
                 {IsEdit ? <><button onClick={HandleSave}>Save</button><button onClick={HandleCancel}>Cancel</button></>:<button onClick={HandleEdit}>Edit</button>}
@@ -85,13 +85,13 @@ const Profile = () => {
             {curr === 'account' ? <>
               <h2 style={{color:"gold"}}>Account Information</h2>
               <form action="" className='FileInInfo'>
-              <label htmlFor="">
+              {/* <label htmlFor="">
                   CodeZero Id <br />
                   <input type="text" name="" id="" readOnly={!IsEdit} />
-                </label>
+                </label> */}
               <label htmlFor="">
                   Email <br />
-                  <input type="text" name="" id="" readOnly={!IsEdit} />
+                  <input type="text" name="" id="" value={User?.email} readOnly={!IsEdit} />
                 </label>
               <label htmlFor="">
                   Password <br />

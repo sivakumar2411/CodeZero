@@ -31,7 +31,7 @@ import DrawOutlinedIcon from '@mui/icons-material/DrawOutlined';
 
 const ProblemSolving = () => {
 
-    const {Theme,setTOV,setUOV} = useContext(ThemeContext);
+    const {Theme,setTOV,setUOV,setNVisi} = useContext(ThemeContext);
     const {LoggedIn,User,ReloadUser} = useContext(UserContext);
     const {probid} = useParams();
 
@@ -195,7 +195,7 @@ const ProblemSolving = () => {
     }
 
   return (
-    <div className={`ProblemSolvingBG ${Theme.BG}`} onClick={()=>{setTOV(false);setUOV(false);setOV(false)}}>
+    <div className={`ProblemSolvingBG ${Theme.BG}`} onClick={()=>{setTOV(false);setUOV(false);setOV(false);setNVisi(false);}}>
         {/* <div dangerouslySetInnerHTML={{__html:problem.description}}/> */}
 
         <div className="NavOnProbSolv"><Navbar/></div>

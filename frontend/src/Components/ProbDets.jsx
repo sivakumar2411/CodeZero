@@ -11,6 +11,7 @@ import { CLChoice } from '../Assets/Datas';
 import CheckIcon from '@mui/icons-material/Check';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import IDEForShowCase from './IDEForShowCase';
 
 const ProbDets = ({Prob,ProfSF}) => {
 
@@ -106,7 +107,8 @@ const ProbDets = ({Prob,ProfSF}) => {
                     </div>:null}
                 </div>
                 <div className={`SolutionDivOnQSF ${Theme.MD} `}>
-                  <textarea style={{resize:"none"}} placeholder='Enter Your Solution' value={Problem.ogs.solution} onChange={(event)=>{setProblem({...Problem,ogs:{...Problem.ogs,solution:event.target.value}})}}/>
+                  <IDEForShowCase props={{val:Problem.ogs.solution,lang:Problem.ogs.language,setVal:(e)=>{setProblem({...Problem,ogs:{...Problem.ogs,solution:e}})}}}/>
+                  {/* <textarea style={{resize:"none"}} placeholder='Enter Your Solution' value={Problem.ogs.solution} onChange={(event)=>{setProblem({...Problem,ogs:{...Problem.ogs,solution:event.target.value}})}}/> */}
                 </div>
             </div>
             <div className="CodeDiv SnipsOnPDB">
@@ -120,13 +122,16 @@ const ProbDets = ({Prob,ProfSF}) => {
                     </div>:null}
                 </div>
                 <div className={`SolutionOnCD ${Theme.MD} `}>
-                  <textarea style={{resize:"none"}} placeholder='Enter Your Solution' value={Problem.codesnips[csind].packsnips} onChange={(event)=>{const a = Problem.codesnips;a[csind].packsnips=event.target.value;setProblem({...Problem,codesnips:a})}}/>
+                  <IDEForShowCase props={{val:Problem.codesnips[csind].packsnips,lang:Problem.codesnips[csind].lang,setVal:(e)=>{const a = Problem.codesnips;a[csind].packsnips=e;setProblem({...Problem,codesnips:a})}}}/>
+                  {/* <textarea style={{resize:"none"}} placeholder='Enter Your Solution' value={Problem.codesnips[csind].packsnips} onChange={(event)=>{const a = Problem.codesnips;a[csind].packsnips=event.target.value;setProblem({...Problem,codesnips:a})}}/> */}
                 </div>
                 <div className={`SolutionOnCD ${Theme.MD} `}>
-                  <textarea style={{resize:"none"}} placeholder='Enter Your Solution' value={Problem.codesnips[csind].visisnips} onChange={(event)=>{const a = Problem.codesnips;a[csind].visisnips=event.target.value;setProblem({...Problem,codesnips:a})}}/>
+                  <IDEForShowCase props={{val:Problem.codesnips[csind].visisnips,lang:Problem.codesnips[csind].lang,setVal:(e)=>{const a = Problem.visisnips;a[csind].packsnips=e;setProblem({...Problem,codesnips:a})}}}/>
+                  {/* <textarea style={{resize:"none"}} placeholder='Enter Your Solution' value={Problem.codesnips[csind].visisnips} onChange={(event)=>{const a = Problem.codesnips;a[csind].visisnips=event.target.value;setProblem({...Problem,codesnips:a})}}/> */}
                 </div>
                 <div className={`SolutionOnCD ${Theme.MD} `}>
-                  <textarea style={{resize:"none"}} placeholder='Enter Your Solution' value={Problem.codesnips[csind].hiddensnips} onChange={(event)=>{const a = Problem.codesnips;a[csind].hiddensnips=event.target.value;setProblem({...Problem,codesnips:a})}}/>
+                  <IDEForShowCase props={{val:Problem.codesnips[csind].hiddensnips,lang:Problem.codesnips[csind].lang,setVal:(e)=>{const a = Problem.codesnips;a[csind].hiddensnips=e;setProblem({...Problem,codesnips:a})}}}/>
+                  {/* <textarea style={{resize:"none"}} placeholder='Enter Your Solution' value={Problem.codesnips[csind].hiddensnips} onChange={(event)=>{const a = Problem.codesnips;a[csind].hiddensnips=event.target.value;setProblem({...Problem,codesnips:a})}}/> */}
                 </div>
             </div>
             <div className="TestCaseFormOnCD">
