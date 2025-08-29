@@ -2,11 +2,18 @@ import { User } from "../Model/User.js";
 import bcrypt from "bcryptjs";
 import GenerateJWT from "../Util/GenerateToken.js";
 import { Notification } from "../Model/Notification.js";
+import axios from "axios";
 
 export const postNewUser = async(req,res) =>{
 
     try{
         const {uname,name,email,password} = req.body;
+
+        const hunterres = await axios.get(`https://api.hunter.io/v2/email-verifier?email=${email}&api_key=${process.env.Hunter_Api_Key}`);
+        // console.log(hunterres);
+
+        if(hunterres?.data?.data?.status !== "valid" && hunterres?.data?.data?.result !== "deliverable")
+            return res.status(400).json({message: "Invalid Email"});
 
         const EmailTaken = await User.findOne({email:email});
         if(EmailTaken)
@@ -50,8 +57,8 @@ export const LogIn = async(req,res) =>{
     try{
     const {username,password} = req.body;
     
-    const user = await User.findOne({uname:username} || {email:username}).populate("notifications");
-    console.log(user);
+    const user = await User.findOne({ $or: [{ uname: username }, { email: username }] }).populate("notifications");
+    // console.log(user);
     
 
     if(!user)

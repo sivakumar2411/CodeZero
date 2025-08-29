@@ -25,7 +25,7 @@ const SignUp = ({props}) => {
             navi("/");
         }
         catch(err){
-            if(err.response.status === 400)
+            if(err?.response?.status === 400)
                 toast.error(err?.response?.data?.message);
             else
                 toast.error("Something went wrong")
@@ -36,7 +36,7 @@ const SignUp = ({props}) => {
     <div className='SignINUPMainDiv'>
         <div className="LeftSUMD">
             <form onSubmit={(event)=>SingUpSub(event)}>
-                <h2 style={{color:"blue"}}>Sign Up</h2>
+                <h1 style={{color:"blue"}}>Start Journey</h1>
                 <TextInput props={{label:"User Name",val:data.uname,type:"text",setval:(a)=>{setData({...data,uname:a})}}}/>
                 <TextInput props={{label:"Email",val:data.email,type:"email",setval:(a)=>{setData({...data,email:a})}}}/>
                 <TextInput props={{label:"Password",val:data.password,type:"password",setval:(a)=>{setData({...data,password:a})}}}/>
@@ -45,7 +45,6 @@ const SignUp = ({props}) => {
                 <p>Already have an account? <span style={{color:"green",cursor:"pointer"}} onClick={()=>{setLogIn(true)}}>Sign In</span></p>
             </form>
         </div>
-        <div className="RightSUMD"></div>
     </div>
   )
 }

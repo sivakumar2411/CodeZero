@@ -6,12 +6,14 @@ import { FaPhoneAlt } from "react-icons/fa";
 import Navbar from './Navbar';
 import { FiMinusCircle } from "react-icons/fi";
 import { IoMdAddCircleOutline } from "react-icons/io";
+import { useNavigate } from 'react-router-dom';
 
 
 
 const Home = () => {
 
   const [showopn,Setshowopen] = useState(null);
+  const navi = useNavigate();
   const toggleFAQ = (index) =>{
     if(showopn === index)
       Setshowopen(null);
@@ -41,7 +43,7 @@ const Home = () => {
           <div className="HomeWelcomeDiv">
             <h1 style={{textAlign:"start"}}>Unlock Your Coding Potential</h1>
             <p style={{color:"gold",fontFamily:"Mulish",textAlign:"start"}}>Practice, learn, and compete with coding problems crafted by top engineers.</p>
-            <button>Get Started </button>
+            <button onClick={()=>{navi("/Problems")}}>Get Started </button>
           </div>
           <div className="herosecimage"></div>
         </div>

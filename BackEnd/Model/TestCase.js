@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import input from "./Input.js";
 
 const tc =new mongoose.Schema({
 
@@ -7,10 +8,7 @@ const tc =new mongoose.Schema({
         ref: "Problem",
         required:true
     },
-    input: {
-        type: String,
-        required: true
-    },
+    input: [input],
     output: {
         type: String,
         required: true

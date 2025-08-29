@@ -166,16 +166,29 @@ export const RunTestCases = async(req,res) =>{
         for(let i=0; i<testcases.length; i++)
         {
             const {input} = testcases[i];
-            const result = await Execute({code,language,input});
-            const ores = await Execute({code:ocode,language:olanguage,input});
+            let newInput = input[0].value;
+            for(let j=1; j<input.length; j++){
+                newInput += "\n" + input[j].value;
+            }
+            
+            const ores = await Execute({code:ocode,language:olanguage,input:newInput});
+            let err = ores.stdout.split("Error");
+            if(err.length > 1)
+                return res.status(404).json({message: err[1]});
+            
+            const result = await Execute({code,language,input:newInput});
 
             // console.log(result);
             
             if(result.stderr.length > 0)
                 return res.status(404).json({message: result.stderr});
+            
+            err = result.stdout.split("Error");
+            if(err.length > 1)
+                return res.status(404).json({message: err[1]});
 
             let Op = result.stdout.split("STDOUT");
-            // console.log(Op);
+            console.log(Op);
             
 
             results.push({
@@ -218,7 +231,13 @@ export const SubmitTestCases = async(req,res) =>{
         for(let i=0;i<testcases.length;i++)
         {
             const {input} = testcases[i];
-            const result = await Execute({code,language,input});
+
+            let newInput = input[0].value;
+            for(let j=1; j<input.length; j++){
+                newInput += "\n" + input[j].value;
+            }
+
+            const result = await Execute({code,language,input:newInput});
 
             console.log(result);
             
@@ -242,7 +261,29 @@ export const SubmitTestCases = async(req,res) =>{
                     await user.save();
                 }
                 await sol.save();
-                return res.status(404).json({message:"Error saving solution"});
+                return res.status(404).json({message:"Error solution"});
+            }
+            let err = result.stdout.split("Error");
+            if(err.length > 1){
+                const sol = new Solution({
+                    problemId:pId,
+                    code: scode,
+                    language: language,
+                    userId:uId,
+                    Error: result.err[1],
+                    passed:i,
+                    status:"Error"
+                });
+                if (!user.NotSolved && !user.SolvedProbs?.some(({ problemID }) => problemID === pId)) {
+                    user.NotSolved = [{ problemID: pId }];
+                    await user.save();
+                }
+                else if ( Array.isArray(user.NotSolved) && !user.NotSolved.some(({ problemID }) => problemID === pId) && !user.SolvedProbs?.some(({ problemID }) => problemID === pId) ) {
+                    user.NotSolved.push({ problemID: pId });
+                    await user.save();
+                }
+                await sol.save();
+                return res.status(404).json({message:"Error solution"});
             }
             let Op = result.stdout.split("STDOUT");
 

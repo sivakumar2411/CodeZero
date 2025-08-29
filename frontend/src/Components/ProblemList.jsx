@@ -8,6 +8,7 @@ import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import { DartThrow } from '../Assets/Datas';
 import { green, red, yellow } from '@mui/material/colors';
 import '../Assets/Css/Problems.css'
+import toast from 'react-hot-toast';
 
 
 const ProblemList = ({props}) => {
@@ -61,11 +62,16 @@ const ProblemList = ({props}) => {
 
     useEffect(()=>{
         const fetchProbs = async()=>{
+            try{
             const res = await GetProbsWithPageAndSort({difficulty:difficulty,...page,search:search,status,uid:User.id});
             console.log(res);
             setTOP(res.data.top);
             setProbs(res.data.problems || []);
             // console.log(status,User);
+            }
+            catch(e){
+                if(e?.response?.status === 401) toast.error(e.response.data.message);
+            }
             
         }
 

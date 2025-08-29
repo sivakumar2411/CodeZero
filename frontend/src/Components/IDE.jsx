@@ -4,12 +4,13 @@ import { ThemeContext } from './GlobeData'
 import '../Assets/Css/IDE.css'
 import { CLChoice } from '../Assets/Datas'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import toast from 'react-hot-toast'
 
 const IDE = ({props}) => {
 
     const {Theme} = useContext(ThemeContext);
 
-    const {val,setVal,language,setL,optVisi,setOV,langchange} = props;
+    const {val,setVal,language,setL,optVisi,setOV,langchange,copyandpaste} = props;
 
     const [langName,setLN] = useState(()=>{if(language === "")return "JavaScript";else{const l = CLChoice.findIndex(({Lang})=> Lang === language);return CLChoice[l].Name;}});
     
@@ -21,6 +22,18 @@ const IDE = ({props}) => {
       setLN(data.Name);
       
     }
+
+    const handleCopyandPaste = (editor,monaco) =>{
+      if (!copyandpaste) {
+        editor.onKeyDown((e) => {
+          if (e.ctrlKey && (e.keyCode === monaco.KeyCode.KeyC || e.keyCode === monaco.KeyCode.KeyV)) {
+            e.preventDefault();
+            toast.error("You can't Copy/Paste");
+          }
+        });
+    }
+    }
+    
   return (
     <div className={`IDEMainDiv ${Theme.BG}`} onClick={(event)=>{event.preventDefault();}}>
     <div className={`HeadingOnIDE ${Theme.MD}`}>
@@ -43,6 +56,7 @@ const IDE = ({props}) => {
     defaultValue=''
     value={val}
     onChange={(nv)=>{setVal(nv)}}
+    onMount={handleCopyandPaste}
     />
     </div>
   )

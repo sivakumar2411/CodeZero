@@ -65,7 +65,8 @@ const ProblemSolving = () => {
                 const res1 = await getSolutionsByProblemId(res.data.problem._id);
                 setOtherSub(res1.data.solutions);
                 
-                setSTC(res.data.problem.sampletestcases.map((a)=>{return {input:a.input,output:"", expected:a.output,stdo:"",isPass:false}}) || []);
+                const cases = res.data.problem.sampletestcases.map((a)=>{return {input:a.input,output:"", expected:a.output,stdo:"",isPass:false}}) || [];
+                setSTC([...JSON.parse(JSON.stringify(cases))])
                 if(res.data.problem)
                     {
                         const ind = res.data.problem.codesnips.findIndex(({lang})=>lang === language);
@@ -120,7 +121,9 @@ const ProblemSolving = () => {
                     setOtherSub(res1.data.solutions);
                 }
             }
-            catch(e){}
+            catch(e){
+                if(e?.response?.status === 401) toast.error(e.response.data.message);
+            }
         }
         fetchSubs();
     },[problem,User,StateOfLDiv])
@@ -152,6 +155,7 @@ const ProblemSolving = () => {
             console.log(e);
             if(e?.response?.status === 404)
                 setError(e.response.data.message);
+            else if(e?.response?.status === 401) toast.error(e.response.data.message);
             else
                 toast.error("Something went wrong");
         }
@@ -180,6 +184,7 @@ const ProblemSolving = () => {
             }
             else if(e?.response?.status === 404)
                 setError(e.response.data.message);
+            else if(e?.response?.status === 401) toast.error(e.response.data.message);
             else
             {
                 toast.error("Something went wrong");
@@ -252,7 +257,9 @@ const ProblemSolving = () => {
                                         <div className={`${Theme.SD}`} style={{padding:"1% 1%",borderRadius:"10px"}}>{sub.Error}</div>
                                     </div></>:<>
                                     Input
-                                    <div className={`InputOnPIOCD ${Theme.SD}`}>{sub.input}</div>
+                                    {sub?.input?.map((INP,index)=>(
+                                        <div className={`InputOnPIOCD ${Theme.SD}`} key={index}>{INP.value}</div>
+                                    ))}
 
                                     {(sub.stdout.length > 0)?<>StdOut
                                         <div className={`OutputOnPIOCD ${Theme.SD}`}>{sub.stdout}</div></>:null}
@@ -283,7 +290,7 @@ const ProblemSolving = () => {
                         <div className={` ${Theme.HD}`} onClick={()=>{if(!LoggedIn) toast.error("Kindly Login/Register to SubmitCode");else if(!RunningTC)SubmitTC();}} style={{color:"rgb(19, 169, 9)",cursor:RunningTC?"wait":"pointer"}} >{!RunningTC?<><BackupOutlinedIcon style={{fontSize:'20px',marginRight:"5px"}}/> Submit</>:<ThreeDotLoad/>}</div>
                     </div>
                 </div>
-                <IDE props={{val,setVal,language,setL,optVisi,setOV,langchange:false}}/>
+                <IDE props={{val,setVal,language,setL,optVisi,setOV,langchange:false,copyandpaste:false}}/>
             </div>
             <div className={`ProblemIODiv ${Theme.MD}`} style={{gridRow:(iostate)?"4/6":"5/6"}}>
                 <div className={`HeadingOnProbIO ${Theme.SD}`}>
@@ -292,7 +299,7 @@ const ProblemSolving = () => {
                         <div className={` ${Theme.HD} `} onClick={()=>{if(runnedonce)setTCO(true);else toast.custom(<div style={{backgroundColor:"orange",padding:"10px 20px",fontSize:"20px",color:"white",borderRadius:"10px"}}>You Must Run Code First</div>)}}><TerminalIcon style={{fontSize:'20px',marginRight:"2px"}} sx={{color:green[800]}}/> Test Result</div>
                     </div>
                     <div className='HeadOnPIO2'>
-                        <div className={`HeadOnPIO2div ${Theme.HD}`} onClick={()=>{setSTC(problem.sampletestcases);setTCI({...tcindex,tcind:0});setRO(false);setTCO(false);}} ><ReplayOutlinedIcon style={{fontSize:'20px',marginRight:"2px"}}/>Reset</div>
+                        <div className={`HeadOnPIO2div ${Theme.HD}`} onClick={()=>{const rc = [...problem.sampletestcases.map((a)=>{return {input:a.input,output:"", expected:a.output,stdo:"",isPass:false}})];setSTC([...JSON.parse(JSON.stringify(rc))]);setTCI({...tcindex,tcind:0});setRO(false);setTCO(false);}} ><ReplayOutlinedIcon style={{fontSize:'20px',marginRight:"2px"}}/>Reset</div>
                         <div className={`HeadOnPIO2div ${Theme.HD}`} onClick={()=>{if(!RunningTC)RunTestCase();}} style={{cursor:RunningTC?"wait":"pointer"}} >{!RunningTC?<><PlayArrowIcon style={{fontSize:'25px',marginRight:"2px"}}/>Run</>:<ThreeDotLoad/>}</div>
                         <div className={`HeadOnPIO2div ${Theme.HD}`} onClick={()=>{setIOS(!iostate);}}><FaChevronDown style={{transform:(iostate)?"rotateZ(180deg)":"",transition:"all .3s ease"}}/></div>
                     </div>
@@ -311,15 +318,31 @@ const ProblemSolving = () => {
                         {(tcopt)?<div className='PassedTestCase'>TestCases Passed {sampleTC.filter(({isPass})=>isPass).length} / {sampleTC.length}</div>:null}
                         <div className='ProblemTCSN'>
                         {sampleTC.map((tc,index)=>(
-                            <div key={index} onClick={()=>{if(!tcopt)setTCI({...tcindex,tcind:index});else setTCI({...tcindex,tcres:index});}} className={`CasesOnPTCSN ${Theme.HD} ${((index === tcindex.tcind && !tcopt) || (index === tcindex.tcres && tcopt))?Theme.SD:""}`} style={{color:tcopt?sampleTC[index].isPass?"green":"red":""}}>Case {index + 1}
+                            <div key={index} onClick={()=>{if(!tcopt)setTCI({...tcindex,tcind:index});else setTCI({...tcindex,tcres:index});}} className={`CasesOnPTCSN ${Theme.HD} ${((index === tcindex.tcind && !tcopt) || (index === tcindex.tcres && tcopt))?Theme.SD:""}`} style={{color:tcopt?sampleTC[index].isPass?green.A400:red.A400:""}}>Case {index + 1}
                                 {(!tcopt && sampleTC?.length > 1)?<div className={`XOnProblemTCSN ${Theme.SD}`} onClick={(event)=>{event.stopPropagation();delteteTestCase(index)}}><CloseIcon fontSize='100'/></div>:null}
                             </div>
                         ))}
                         {(sampleTC.length < 6 && !tcopt)?<div className={`PlusOnPTCSN ${Theme.HD}`} onClick={()=>{addtestcase(tcindex.tcind);}}>Add TestCase</div>:null}
                     </div>
                     {(tcopt)?"Input":""}
-                    <div className={`InputOnPIOCD ${Theme.SD}`}>
-                        <input style={{width:"90%",fontSize:"inherit",height:"100%",outline:"none",border:"none",background:"none"}} value={(tcopt)?(sampleTC[tcindex.tcres]?.input):(sampleTC[tcindex.tcind]?.input)} readOnly={tcopt} onChange={(e)=>{const a = [...sampleTC];a[tcindex.tcind].input=e.target.value;setSTC(a);}} />
+                    <div>
+                        {tcopt?sampleTC[tcindex.tcres]?.input?.map((INP,index)=>(
+                            <>{INP.varName} =
+                            <div key={index} className={`InputOnPIOCD ${Theme.SD}`}>
+                                <textarea style={{width:"90%",fontSize:"inherit",color:"inherit",minHeight:"100%",maxHeight:"100px",outline:"none",overflowY:"auto",border:"none",background:"none",resize:"none"}} onInput={(e)=>{e.target.style.height = "auto";e.target.style.height = `${e.target.scrollHeight}px`;}} value={INP.value} readOnly />
+                            </div>
+                            </>
+                        )):sampleTC[tcindex.tcind]?.input?.map((INP,index)=>(
+                            <>
+                                {INP.varName} =
+                            <div key={index} className={`InputOnPIOCD ${Theme.SD}`}>
+                                <textarea style={{width:"90%",fontSize:"inherit",color:"inherit",minHeight:"100%",maxHeight:"100px",outline:"none",overflowY:"auto",border:"none",background:"none",resize:"none",boxSizing:"border-box",verticalAlign:"bottom"}} value={INP.value}
+                                    placeholder="Value" onChange={(e)=>{const a = sampleTC[tcindex.tcind].input;a[index].value=e.target.value;const aa = [...sampleTC];aa[tcindex.tcind].input = a;setSTC(aa);}} 
+                                    onInput={(e)=>{e.target.style.height = "auto";e.target.style.height = `${e.target.scrollHeight}px`;}}/>
+                            </div>
+                            </>
+                        ))}
+                        {/* <input style={{width:"90%",fontSize:"inherit",height:"100%",outline:"none",border:"none",background:"none"}} value={(tcopt)?(sampleTC[tcindex.tcres]?.input):(sampleTC[tcindex.tcind]?.input)} readOnly={tcopt} onChange={(e)=>{const a = [...sampleTC];a[tcindex.tcind].input=e.target.value;setSTC(a);}} /> */}
                         {/* {(tcopt)?(sampleTC[tcindex.tcres]?.input):(sampleTC[tcindex.tcind]?.input)} */}
                     </div>
                     {(tcopt)?<>

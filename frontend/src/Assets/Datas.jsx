@@ -4,6 +4,7 @@ import CodeCompile from './Lottie/8ZAgfVvoQW.json';
 import Loading from './Lottie/Animation - 1725467987093.json';
 import boy from './Images/boy.webp';
 import threebgm from './Audio/3.mpeg';
+import code1 from "./Images/code1.png";
 
 
 export const CLChoice = [
@@ -48,3 +49,5 @@ export const ThreeBGM = threebgm;
 
 export const Boy = boy;
 export const Secret_Key = "Secret_KEY";
+
+export const Code1 = code1;

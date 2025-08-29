@@ -7,21 +7,24 @@
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    position: relative;
+    background-size:contain;
+    background-repeat: no-repeat;
+    /* background-position-x: 40%; */
 }
 
 .SignMainDiv{
-    width: 60%;
-    height: 80vh;
+    min-width: max-content;
+    width: 30%;
+    height: 70vh;
     border-radius: 20px;
     display: grid;
+    transition: all 1s ease;
 }
 
 .SignINUPMainDiv{
     width: 100%;
     height: 100%;
-    display: grid;
-    grid-template-columns: 50% 50%;
-    grid-template-rows: 100%;
 }
 
 .LeftSIMD,.LeftSUMD{

@@ -10,12 +10,15 @@ import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 import { blue, green, red, yellow } from '@mui/material/colors';
 import { getProblemForDash } from '../API/ProblemApi';
 import EditIcon from '@mui/icons-material/Edit';
+import toast from 'react-hot-toast';
+import CloseIcon from '@mui/icons-material/Close';
+
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 const DashBoard = () => {
 
-    const {Theme,setUOV,setTOV} = useContext(ThemeContext);
+    const {Theme,setUOV,setTOV,setNVisi} = useContext(ThemeContext);
     const {User} = useContext(UserContext);
     const {username} = useParams();
     const navi = useNavigate();
@@ -75,8 +78,8 @@ const DashBoard = () => {
                 const res = await getUserByUName(username);
                 setUData(res.data);
             }
-            catch(err){
-                console.log(err);
+            catch(e){
+                if(e?.response?.status === 401) toast.error(e.response.data.message);
             }
         }
         fetchUser();
@@ -89,7 +92,9 @@ const DashBoard = () => {
                 const res = await getProblemForDash();
                 setProblems(res.data.problems);
             }
-            catch(e){}
+            catch(e){
+                if(e?.response?.status === 401) toast.error(e.response.data.message);
+            }
         }
         fetchProbs();
     },[])
@@ -185,7 +190,7 @@ const DashBoard = () => {
     }
 
   return (
-    <div className={`DashBaseDiv ${Theme.BG}`} onClick={()=>{setUOV(false);setTOV(false);}}>
+    <div className={`DashBaseDiv ${Theme.BG}`} onClick={()=>{setUOV(false);setTOV(false);setNVisi(false)}}>
         <div className="NavOnDash">
             <Navbar/>
         </div>
@@ -214,9 +219,9 @@ const DashBoard = () => {
                         <Doughnut data={chartData} key={showChartText} plugins={[UpdateDonutCenter()]} options={chartOptions}/>
                     </div>
                     <div className="ProblemDatasForGraph">
-                        <div className={`${Theme.SD}`} style={{color:green.A400}} onClick={()=>{setChartShow(1);}}>Easy</div>
-                        <div className={`${Theme.SD}`} style={{color:yellow.A400}} onClick={()=>{setChartShow(2);}}>Medium</div>
-                        <div className={`${Theme.SD}`} style={{color:red.A700}} onClick={()=>{setChartShow(3);}}>Hard</div>
+                        <div className={`${Theme.SD}`} style={{color:green.A400,position:"relative"}} onClick={()=>{chartShow === 1 ? setChartShow(0):setChartShow(1);}}>{chartShow !== 1 ? "Easy":ProblemStatics.etots+"/"+ProblemStatics.etot}</div>
+                        <div className={`${Theme.SD}`} style={{color:yellow.A400,position:"relative"}} onClick={()=>{chartShow === 2 ? setChartShow(0):setChartShow(2);}}>{chartShow !== 2 ? "Medium":ProblemStatics.mtots+"/"+ProblemStatics.mtot}</div>
+                        <div className={`${Theme.SD}`} style={{color:red.A700,position:"relative"}} onClick={()=>{chartShow === 3 ? setChartShow(0):setChartShow(3);}}>{chartShow !== 3 ? "Hard":ProblemStatics.htots+"/"+ProblemStatics.htot}</div>
                     </div>
                 </div>
             </div>

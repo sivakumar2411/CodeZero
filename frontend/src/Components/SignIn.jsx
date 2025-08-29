@@ -5,6 +5,7 @@ import { LoginUser } from '../API/UserApi';
 import { UserContext } from './GlobeData';
 import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
+import { Code1 } from '../Assets/Datas';
 
 const SignIn = ({props}) => {
 
@@ -23,7 +24,7 @@ const SignIn = ({props}) => {
       navi("/");
     }
     catch(err){
-      if(err.response.status === 400)
+      if(err?.response?.status === 400)
         toast.error(err.response.data.message);
       else
         toast.error("Something went wrong")
@@ -31,10 +32,9 @@ const SignIn = ({props}) => {
   }
   return (
     <div className="SignINUPMainDiv">
-        <div className="LeftSIMD"></div>
         <div className="RightSIMD">
           <form onSubmit={(event)=>SISubmit(event)}>
-            <h1 style={{color:"green"}}>Sign In</h1>
+            <h1 style={{color:"green"}}>Advance Journey</h1>
             <TextInput props={{label:"User Name",val:udata.username,type:"text",setval:(a)=>{setUD({...udata,username:a})}}}/>
             <TextInput props={{label:"Password",val:udata.password,type:"password",setval:(a)=>{setUD({...udata,password:a})}}}/>
             <button className='SignInButton' type="submit">Sign In</button>

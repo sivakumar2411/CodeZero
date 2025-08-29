@@ -142,3 +142,17 @@
     border-radius: 5px;
     cursor: pointer;
 }
+
+/* .XOnProblemDB{
+    position: absolute;
+    bottom: 70%;
+    left: 80%;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    font-size: 10px;
+    cursor: pointer;
+    display: grid;
+    place-items: center;
+    visibility: hidden;
+} */

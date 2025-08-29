@@ -9,7 +9,7 @@ const TextInput = ({props}) => {
   const {Theme} = useContext(ThemeContext);
 
   useEffect(()=>{
-    if(val.length === 0)
+    if(val?.length === 0)
       setFoc("");
     else
       setFoc("Focused");
@@ -18,7 +18,7 @@ const TextInput = ({props}) => {
   return (
     <div className={`TextInputBaseDiv ${foc}TIBD`}>
             <label className={`TextLabel ${foc} ${Theme.MD}`}>{label}</label>
-            <input type={type} onFocus={()=>{setFoc("Focused")}} onBlur={()=>{if(val.length === 0)setFoc("");}} value={val} onChange={(e)=>setval(e.target.value)}/>
+            <input type={type} onFocus={()=>{setFoc("Focused")}} onBlur={()=>{if(val?.length === 0)setFoc("");}} value={val} onChange={(e)=>setval(e.target.value)}/>
     </div>
   )
 }

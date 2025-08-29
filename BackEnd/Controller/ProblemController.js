@@ -43,6 +43,7 @@ export const PostNewProblem = async(req,res) =>{
 export const UpdateProblem = async(req, res) => {
     try {
         const TCA = [];
+        console.log(req.body.sampletestcases);
         for(const a of req.body.sampletestcases)
         {
             if(!a._id)
@@ -261,6 +262,7 @@ export const newCases = async(req,res) =>{
                 await newTestcase.save();
             }
         }
+        
         return res.status(201).json({message:"New Test Cases Created"});
     }
     catch(error){

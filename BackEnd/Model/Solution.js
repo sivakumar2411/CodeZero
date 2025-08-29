@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import input from "./Input.js";
 
 const sol = new mongoose.Schema({
 
@@ -34,10 +35,7 @@ const sol = new mongoose.Schema({
         type:Number,
         default:0
     },
-    input:{
-        type:String,
-        default:""
-    },
+    input:[input],
     stdout:{
         type:String,
         default:""

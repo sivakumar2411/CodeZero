@@ -8,6 +8,7 @@ import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import Lottie from 'lottie-react';
 import { CodeCompileLoaded } from '../Assets/Datas';
 import LoadingScreen from './LoadingScreen';
+import toast from 'react-hot-toast';
 
 const OpenIDE = () => {
 
@@ -23,9 +24,14 @@ const OpenIDE = () => {
 
     const ExCode = async()=>{
       setO("");
-      const res = await Execute({code:val,language,input});
-      setLV(false);
-      setO(res.data.output);
+      try{
+        const res = await Execute({code:val,language,input});
+        setLV(false);
+        setO(res.data.output);
+      }
+      catch(e) {                
+        if(e?.response?.status === 401) toast.error(e.response.data.message);
+      }
     }
 
     useEffect(()=>{
@@ -48,7 +54,7 @@ const OpenIDE = () => {
     <div className="OIDEMainDiv">
         {/* <LoadingScreen props={{visi:LoadingScreenVisi,setVisi:setLSV}}/> */}
         <div className={`IDEDivOnOIDE ${Theme.MD}`}>
-          <IDE props={{val,setVal,language,setL,optVisi,setOV,langchange:true}}/>
+          <IDE props={{val,setVal,language,setL,optVisi,setOV,langchange:true,copyandpaste:true}}/>
         </div>
         <div className={`InputOnOIDE ${Theme.MD}`}>
           <div className={`InputHeadingDiv ${Theme.MD}`}>

@@ -7,6 +7,8 @@ import CloseIcon from '@mui/icons-material/Close';
 import CheckIcon from '@mui/icons-material/Check';
 import ProbDets from './ProbDets';
 import toast from 'react-hot-toast';
+import AddIcon from '@mui/icons-material/Add';
+import { CLChoice } from '../Assets/Datas';
 
 const Admin = () => {
 
@@ -18,6 +20,8 @@ const Admin = () => {
 
   const [Users,setAllUsers] = useState([]);
   const [Problems,setProblems] = useState([]);
+  const [NewProblem,setNewProblem] = useState({title:"",description:"",sampletestcases:[],ogs:{language:"cpp",solution:"#"},topics:[],codesnips:CLChoice.filter(({Lang})=> Lang !== "javascript").map(({Lang})=>({lang:Lang,packsnips:" ",hiddensnips:" ",visisnips:" "}))});
+
 
   useEffect(()=>{
     const fetchReqProbs = async()=>{
@@ -25,8 +29,9 @@ const Admin = () => {
       const res = await GetAllProbReqs();
       setProblems(res.data.Probs || []);}
       catch(e){
-        if(e.response.status === 404)
+        if(e?.response?.status === 404)
           toast.error(e.response.data.message);
+        else if(e?.response?.status === 401) toast.error(e.response.data.message);
       }
     }
 
@@ -35,8 +40,9 @@ const Admin = () => {
       const res = await GetAllAccProb();
       setProblems(res.data.Probs || []);}
       catch(e){
-        if(e.response.status === 404)
+        if(e?.response?.status === 404)
           toast.error(e.response.data.message);
+        else if(e?.response?.status === 401) toast.error(e.response.data.message);
       }
     }
 
@@ -54,7 +60,7 @@ const Admin = () => {
           <div className="OptionsDivOnAdmin">
             <div onClick={()=>{setRO(1)}}>User</div>
             <div onClick={()=>{setRO(2)}}>Problem</div>
-            <div onClick={()=>{setRO(3)}}>New Problem</div>
+            <div onClick={()=>{setRO(3)}}>New Problems</div>
           </div>
           <div className="ControllersOnAdmin">
             {(RenderOpt !== 1)?
@@ -65,6 +71,7 @@ const Admin = () => {
                 <div onClick={()=>{setDOP(index)}}><InfoIcon/></div>
               </div>
             ))}
+            <AddIcon style={{position:"absolute",top:0,left:"85%"}}/>
             </>:null}
           </div>
         </div>

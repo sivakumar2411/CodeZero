@@ -91,7 +91,7 @@ const Navbar = () => {
                 <div onClick={()=>{}}>Profile2</div>
                 <div onClick={()=>{}}>Profile3</div>
                 <div onClick={()=>{}}>Profile4</div>
-                <div onClick={()=>{LogOut();}}>Sign Out</div>
+                <div onClick={()=>{navi("/");LogOut();}}>Sign Out</div>
               </div>
             </div>:null}
           </div></>:

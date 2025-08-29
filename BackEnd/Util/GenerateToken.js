@@ -6,6 +6,7 @@ const GenerateJWT = (id,res) =>{
     })
     res.cookie("jwt",jwtt,{
         maxAge:3 * 24 * 60 * 60 * 1000,
+        // maxAge:60 * 1000,
         httpOnly:true,
         // secure:true,
         sameSite:"strict"

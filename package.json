@@ -4,6 +4,7 @@
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.20.2",
     "concurrently": "^9.0.1",
+    "cookie-parser": "^1.4.7",
     "cors": "^2.8.5",
     "crypto-js": "^4.2.0",
     "dotenv": "^16.4.5",
@@ -11,7 +12,7 @@
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.5.3",
     "react-split": "^2.0.14",
-    "socket.io": "^4.7.5"
+    "socket.io": "^4.8.1"
   },
   "devDependencies": {
     "nodemon": "^3.1.4"

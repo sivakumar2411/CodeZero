@@ -3,6 +3,7 @@ import dotenv from 'dotenv';
 import Routes from '../Routes/Routes.js';
 import cors from 'cors';
 import { connectToDB } from '../DataBase/DBCon.js';
+import cookieparser from 'cookie-parser';
 
 const app = express();
 
@@ -17,6 +18,7 @@ app.use(cors({
 }));
 
 app.use(express.json());
+app.use(cookieparser());
 try{
     app.use("/Api",Routes);
 }

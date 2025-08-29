@@ -35,7 +35,7 @@ const GlobeData = ({children}) => {
     const d = localStorage.getItem("CZUser");
     if(d)
     try{
-      const bytes = CryptoJS.AES.decrypt(d,Secret_Key);
+      const bytes = CryptoJS.AES.decrypt(d,process.env.REACT_APP_Secret_Key);
       const newd = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
       // console.log(newd);
       
@@ -52,7 +52,7 @@ const GlobeData = ({children}) => {
   const ReloadUser = async() =>{
     const res = await getUserById(User.id);
     setUser(res.data);
-    const encryptUser = CryptoJS.AES.encrypt(JSON.stringify(res.data),Secret_Key).toString();
+    const encryptUser = CryptoJS.AES.encrypt(JSON.stringify(res.data),process.env.REACT_APP_Secret_Key).toString();
     localStorage.setItem("CZUser",encryptUser);
   }
   
@@ -60,7 +60,7 @@ const GlobeData = ({children}) => {
     return {
     LoggedIn,setLI,User,ReloadUser,
     LogIn:(data)=>{setLI(true);setUser(data);
-      const encryptUser = CryptoJS.AES.encrypt(JSON.stringify(data),Secret_Key).toString();
+      const encryptUser = CryptoJS.AES.encrypt(JSON.stringify(data),process.env.REACT_APP_Secret_Key).toString();
       localStorage.setItem("CZUser",encryptUser);
       localStorage.setItem("CZLoggedIn",JSON.stringify(true));
     },

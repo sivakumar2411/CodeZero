@@ -6,6 +6,7 @@
     align-items: center;
     flex-direction: column;
     font-family: Mulish;
+    position: relative;
 }
 
 .NavOnProfile{
@@ -120,4 +121,33 @@
 .FileInInfo button:hover{
     color: purple;
     background: none;
+}
+
+.ChangePasswordOnProfile{
+    width: max-content;
+    height: auto;
+    cursor: pointer;
+    border-radius: 10px;
+    padding: 5px 10px;
+}
+
+.ChangePWDiv{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    z-index: 10;
+    display: grid;
+    place-items: center;
+    backdrop-filter: blur(10px);
+}
+
+.ChangePassDiv{
+    width: max-content;
+    height: max-content;
+    padding: 40px 10px;
+    row-gap: 20px;
+    border-radius: 20px;
+    display: grid;
+    place-items: center;
 }
